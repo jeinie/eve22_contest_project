@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/main.css">
+    <!--favicon 에러-->
+    <link rel="shortcut icon" href="#">
+    <!--favicon 에러-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <p>회원가입 form</p>
+        <form id="joinForm" action="/auth/join" method="post">
+            <input id="id" type="text" />
+            <input id="password" type="password" />
+            <input type="button" value="회원가입" onclick="goRegist()"/>
+        </form>
+    </div>
+</body>
+
+<script>
+    function goRegist(){
+        const id = document.getElementById("id").value;
+        const password = document.getElementById("password").value;
+
+        axios.get(`/auth/join/${id}/${password}`)
+        .then((res)=>{
+            location.href="/";
+        })
+        .catch((err)=>{
+            console.error(err);
+        })
+        
+    }
+</script>
+
+</html>
