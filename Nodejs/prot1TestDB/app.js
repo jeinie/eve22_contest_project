@@ -14,6 +14,8 @@ dotenv.config();
 
 const authRouter = require('./routes/auth');
 const pageRouter = require('./routes/page');
+const locationRouter = require('./routes/location');
+
 const { sequelize } = require('./models');
 
 const passportConfig = require('./passport');
@@ -63,6 +65,7 @@ app.use(passport.session());
 //라우터 세팅
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
+app.use('/location', locationRouter);
 
 
 app.use((req, res, next) => {

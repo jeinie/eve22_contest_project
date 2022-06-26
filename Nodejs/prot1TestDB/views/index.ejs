@@ -20,6 +20,11 @@
             <p>
                 <input type="button" value="회원탈퇴" onclick="delUser()"/>
             </p>
+            <p>원하시는 버스 번호를 입력하세요.</p>
+            <form action="/location" method="post">
+                <input placeholder="버스 번호" name="number">
+                <button>입력</button>
+            </form>
             <p>
                 <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
             </p>
