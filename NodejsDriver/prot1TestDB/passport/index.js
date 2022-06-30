@@ -1,18 +1,18 @@
 const passport = require('passport');
 const local = require('./localStrategy');
-const Client = require('../models/Client');
+const Driver = require('../models/Driver');
 
 module.exports = () => {
-  passport.serializeUser((Client, done) => {
-    done(null, Client.id);
+  passport.serializeUser((Driver, done) => {
+    done(null, Driver.id);
   });
 
   passport.deserializeUser((id, done) => {
-    Client.findOne({
+    Driver.findOne({
       where: { id : id },
       attributes: ['id','nick','password']
     })
-      .then(Client => done(null, Client))
+      .then(Driver => done(null, Driver))
       .catch(err => done(err));
   });
 

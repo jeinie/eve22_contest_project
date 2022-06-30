@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Client } = require('../models');
+const { Driver } = require('../models');
 
 
 const router = express.Router();

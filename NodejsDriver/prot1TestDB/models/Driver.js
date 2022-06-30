@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Client extends Sequelize.Model {
+module.exports = class Driver extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
       id: {
@@ -19,14 +19,6 @@ module.exports = class Client extends Sequelize.Model {
         type: Sequelize.STRING(15),
         allowNull: false,
       },
-      age:{
-        type: Sequelize.INTEGER(15),
-        allowNull: false,
-      },
-      cardnum:{
-        type: Sequelize.STRING(40),
-        allowNull: true,
-      },
       busId:{
         type: Sequelize.STRING(15),
         allowNull: true,
@@ -35,8 +27,8 @@ module.exports = class Client extends Sequelize.Model {
       sequelize,
       timestamps: true,
       underscored: false,
-      modelName: 'Client',
-      tableName: 'Clients',
+      modelName: 'Driver',
+      tableName: 'Drivers',
       paranoid: true,
       charset: 'utf8',
       collate: 'utf8_general_ci',

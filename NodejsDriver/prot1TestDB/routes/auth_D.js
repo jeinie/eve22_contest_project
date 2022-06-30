@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const Client = require('../models/Client');
+const Driver = require('../models/Driver');
 
 const router = express.Router();
 
@@ -11,10 +11,10 @@ async function resMsg(result,res){
 }
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-  const { id,password,nick,name,age  } = req.body;
+  const { id,password,nick,name } = req.body;
   
     try {    
-        const exUser = await Client.findOne({ where: { id : id } });
+        const exUser = await Driver.findOne({ where: { id : id } });
         const result = {};
         if (exUser) {
         //return res.redirect('/join?error=exist');
@@ -24,12 +24,11 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
           return false;
         }
         const hash = await bcrypt.hash(password, 12);
-        await Client.create({
+        await Driver.create({
           id,
           password: hash,
           nick,
           name,
-          age
         });
         result["success"] = "200";
         result["msg"] = "regist successed";
@@ -74,9 +73,9 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 router.get('/delUser/:userid', isLoggedIn, async (req, res) => {
   const userid = req.params.userid;
   try {
-    const exUser = await Client.findOne({ where: { id : userid } });
+    const exUser = await Driver.findOne({ where: { id : userid } });
     if (exUser) {
-      await Client.destroy({
+      await Driver.destroy({
         where:{
           id: userid
         }

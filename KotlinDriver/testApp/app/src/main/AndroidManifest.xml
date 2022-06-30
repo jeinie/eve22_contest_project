@@ -13,7 +13,8 @@
         android:theme="@style/Theme.TestApp"
 
         android:usesCleartextTraffic="true"
-    >
+        >
+
 
         <activity android:name=".activity.IndexActivity">
             <intent-filter>
@@ -22,6 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.RegistActivity"/>
+        <activity android:name=".activity.MainActivity"/>
     </application>
 
 </manifest>
