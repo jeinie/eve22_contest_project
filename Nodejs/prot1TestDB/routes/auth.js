@@ -33,6 +33,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
       return next(authError);
     }
     if (!user) {
+      console.log("??");
       return res.redirect(`/?loginError=${info.message}`);
     }
     return req.login(user, (loginError) => {
