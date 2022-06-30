@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 
-const User = require('./user');
+const Client = require('./Client');
 
 const db = {};
 
@@ -11,9 +11,9 @@ const sequelize = new Sequelize(
 );
 
 db.sequelize = sequelize;
-db.User = User;
+db.Client = Client;
 
-User.init(sequelize);
+Client.init(sequelize);
 
 //나중에 추가되면 사용할수도
 //User.associate(db);

@@ -12,7 +12,7 @@ dotenv.config();
 
 
 
-const authRouter = require('./routes/auth');
+const auth_C_Router = require('./routes/auth_C');
 const pageRouter = require('./routes/page');
 const locationRouter = require('./routes/location');
 
@@ -64,7 +64,7 @@ app.use(passport.session());
 
 //라우터 세팅
 app.use('/', pageRouter);
-app.use('/auth', authRouter);
+app.use('/auth_C', auth_C_Router);
 app.use('/location', locationRouter);
 
 

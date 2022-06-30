@@ -2,22 +2,22 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const User = require('../models/user');
+const Client = require('../models/Client');
 
 const router = express.Router();
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
   const { id, nick, password } = req.body;
     try {
-        const exUser = await User.findOne({ where: { id } });
+        const exUser = await Client.findOne({ where: { id } });
         if (exUser) {
         return res.redirect('/join?error=exist');
         }
         const hash = await bcrypt.hash(password, 12);
-        await User.create({
-        id,
-        password: hash,
-        nick,
+        await Client.create({
+          id,
+          password: hash,
+          nick,
         });
         return res.redirect('/');
     } catch (error) {
@@ -37,6 +37,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
       return res.redirect(`/?loginError=${info.message}`);
     }
     return req.login(user, (loginError) => {
+      console.log(`user : ${user}`);
       if (loginError) {
         console.error(loginError);
         return next(loginError);
@@ -50,9 +51,9 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 router.get('/delUser/:userid', isLoggedIn, async (req, res) => {
   const userid = req.params.userid;
   try {
-    const exUser = await User.findOne({ where: { id : userid } });
+    const exUser = await Client.findOne({ where: { id : userid } });
     if (exUser) {
-      await User.destroy({
+      await Client.destroy({
         where:{
           id: userid
         }
