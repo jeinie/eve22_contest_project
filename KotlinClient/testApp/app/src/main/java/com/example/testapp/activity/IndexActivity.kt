@@ -42,12 +42,10 @@ class IndexActivity : AppCompatActivity() {
         //로그인하는 버튼 이벤트
         L_BTN.setOnClickListener{ view ->
             var icon = IndexController()
-            Log.d("ㅣ눌리는지확인","눌리는지확인")
             icon.getLogin(L_UID_TF.text.toString(),L_UPW_TF.text.toString(),applicationContext)
         }
         //회원가입페이지로가는 버튼 이벤트
         R_BTN.setOnClickListener { view ->
-            Log.d("눌리는지확인","눌리는지확인")
             var intent = Intent(baseContext, RegistActivity::class.java)
             startActivity(intent)
         }
