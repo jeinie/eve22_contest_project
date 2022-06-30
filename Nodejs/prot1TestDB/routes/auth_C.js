@@ -6,20 +6,35 @@ const Client = require('../models/Client');
 
 const router = express.Router();
 
+async function resMsg(result,res){
+  return res.json(result);
+}
+
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-  const { id, nick, password } = req.body;
-    try {
-        const exUser = await Client.findOne({ where: { id } });
+  const { id,password,nick,name,age  } = req.body;
+  
+    try {    
+        const exUser = await Client.findOne({ where: { id : id } });
+        const result = {};
         if (exUser) {
-        return res.redirect('/join?error=exist');
+        //return res.redirect('/join?error=exist');
+          result["success"] = "100";
+          result["msg"] = "regist failed";
+          await resMsg(result,res);
+          return false;
         }
         const hash = await bcrypt.hash(password, 12);
         await Client.create({
           id,
           password: hash,
           nick,
+          name,
+          age
         });
-        return res.redirect('/');
+        result["success"] = "200";
+        result["msg"] = "regist successed";
+        //res.json(result);
+        await resMsg(result,res);
     } catch (error) {
         console.error(error);
         return next(error);
@@ -27,22 +42,30 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.post('/login', isNotLoggedIn, (req, res, next) => {
-  passport.authenticate('local', (authError, user, info) => {
+  passport.authenticate('local', async (authError, user, info) => {
+    const result = {};
     if (authError) {
       console.error(authError);
       return next(authError);
     }
     if (!user) {
-      console.log("??");
-      return res.redirect(`/?loginError=${info.message}`);
+      result["success"] = "100";
+      result["msg"] = "login failed";
+      await resMsg(result,res);
+      //return res.redirect(`/?loginError=${info.message}`);
     }
-    return req.login(user, (loginError) => {
-      console.log(`user : ${user}`);
+    return req.login(user, async (loginError) => {
       if (loginError) {
         console.error(loginError);
         return next(loginError);
       }
-      return res.redirect('/');
+      result["id"] = user["id"];
+      result["nick"] = user["nick"];
+      result["name"] = user["name"];
+      result["age"] = user["age"];
+      result["success"] = "200";
+      result["msg"] = "login successed";
+      await resMsg(result,res);
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
 });
