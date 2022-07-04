@@ -23,7 +23,6 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-
 passportConfig(); // 패스포트 설정
 
 app.set('port', process.env.PORT || 8080);
