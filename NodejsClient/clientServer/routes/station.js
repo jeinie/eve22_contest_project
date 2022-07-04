@@ -35,3 +35,6 @@ router.post('/searchStationListsByBusLineName', isNotLoggedIn, async (req, res, 
         return next(error);
     }
 });
+
+
+module.exports = router;
