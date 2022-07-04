@@ -37,6 +37,6 @@ module.exports = class wayInfo extends Sequelize.Model {
 
   static associate(db) {
   //나중에 추가할수도
-    db.wayInfo.belongsToMany(db.way);
+    db.wayInfo.belongsToMany(db.way, {through : 'busWays'});
   }
 };
