@@ -24,6 +24,6 @@ wayInfo.init(sequelize);
 //User.associate(db);
 
 way.associate(db);
-wayInfo.associate(db);
+//wayInfo.associate(db);
 
 module.exports = db;
