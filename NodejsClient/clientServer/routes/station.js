@@ -12,8 +12,8 @@ async function resMsg(result,res){
 }
 
 router.post('/searchStationListsByBusLineName', isNotLoggedIn, async (req, res, next) => {
-  const { busLineName } = req.body;
-  
+  //const { busLineName } = req.body;
+  const busLineName = "4312";
     try {    
         const busLineNames = await wayInfo.findAll({ where: { 노선명 : busLineName } });
         const result = {};
