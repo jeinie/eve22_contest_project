@@ -15,6 +15,8 @@ dotenv.config();
 const auth_C_Router = require('./routes/auth_C');
 const pageRouter = require('./routes/page');
 const locationRouter = require('./routes/location');
+const stationRouter = require('./routes/station');
+
 
 const { sequelize } = require('./models');
 
@@ -65,6 +67,7 @@ app.use(passport.session());
 app.use('/', pageRouter);
 app.use('/auth_C', auth_C_Router);
 app.use('/location', locationRouter);
+app.use('/station',stationRouter);
 
 
 app.use((req, res, next) => {
