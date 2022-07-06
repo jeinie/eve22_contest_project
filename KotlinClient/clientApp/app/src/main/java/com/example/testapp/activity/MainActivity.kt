@@ -1,5 +1,6 @@
 package com.example.testapp.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.SearchView
@@ -10,8 +11,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //맨위 보라색 상태바 색상 변경
+        window.statusBarColor = Color.parseColor("#FFFFFF")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(busNum: String?): Boolean {

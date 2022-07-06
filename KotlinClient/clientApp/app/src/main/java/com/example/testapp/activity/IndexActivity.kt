@@ -1,9 +1,13 @@
 package com.example.testapp.activity
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.example.testapp.R
 import com.example.testapp.controller.indexController.IndexController
 import com.example.testapp.databinding.ActivityIndexBinding
 
@@ -14,18 +18,18 @@ import com.example.testapp.databinding.ActivityIndexBinding
 //TF = TextField
 //BTN = button
 
-
 class IndexActivity : AppCompatActivity() {
     //손님용 앱
     lateinit var binding : ActivityIndexBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //맨위 보라색 상태바 색상 변경
+        window.statusBarColor = Color.parseColor("#000000")
         binding = ActivityIndexBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
-
+        //index페이지에 gif파일을 재생시키는 역할
+        Glide.with(this).load(R.raw.idxbg).fitCenter().into(binding.indexBg)
 
         //로그인쪽 유저 아이디 입력칸
         var L_UID_TF = binding.LoginUserId

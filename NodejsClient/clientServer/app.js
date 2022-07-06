@@ -11,7 +11,6 @@ const qs = require('qs');
 dotenv.config();
 
 
-
 const auth_C_Router = require('./routes/auth_C');
 const pageRouter = require('./routes/page');
 const locationRouter = require('./routes/location');

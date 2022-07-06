@@ -1,6 +1,7 @@
 package com.example.testapp.activity
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +17,9 @@ open class RegistActivity : AppCompatActivity(){
     //BTN = button
     lateinit var binding : ActivityRegistBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+        //맨위 보라색 상태바 색상 변경
+        window.statusBarColor = Color.parseColor("#FFFFFF")
         binding = ActivityRegistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

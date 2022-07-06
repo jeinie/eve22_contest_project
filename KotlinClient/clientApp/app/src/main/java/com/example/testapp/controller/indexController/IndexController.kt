@@ -14,7 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class IndexController {
 
     fun getLogin(id : String,password : String,applicontext : Context){
-        val retrofit = Retrofit.Builder().baseUrl("http://54.193.29.150:8080").
+        //val retrofit = Retrofit.Builder().baseUrl("http://54.193.29.150:8080").
+        val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:8080").
         addConverterFactory(GsonConverterFactory.create()).build()
 
         val service = retrofit.create(LoginService::class.java)

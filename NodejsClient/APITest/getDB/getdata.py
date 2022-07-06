@@ -3,7 +3,7 @@ import sys
 import numpy
 #db 연결단
 import pymysql
-conn = pymysql.connect(host='localhost', user='root', password='12345', db='prj-maindb', charset='utf8')
+conn = pymysql.connect(host='localhost', user='root', password='Rlatmdwl12!', db='prj_maindb', charset='utf8')
 cur = conn.cursor()
 
 #
