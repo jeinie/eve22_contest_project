@@ -9,9 +9,10 @@
         <entry key="app/src/main/res/drawable/index_id_pw_btn.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/index_login_btn.xml" value="0.1675925925925926" />
         <entry key="app/src/main/res/drawable/index_register_btn.xml" value="0.1675925925925926" />
+        <entry key="app/src/main/res/font/font.xml" value="0.2574074074074074" />
         <entry key="app/src/main/res/layout/activity_index.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_regist.xml" value="0.17860444631432362" />
+        <entry key="app/src/main/res/layout/activity_regist.xml" value="0.25" />
       </map>
     </option>
   </component>
