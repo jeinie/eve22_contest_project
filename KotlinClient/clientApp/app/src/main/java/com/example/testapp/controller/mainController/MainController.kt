@@ -82,12 +82,12 @@ class MainController {
         //intent.putExtra("seq", body.msgBody.itemList[0].seq)
 
         // 가져온 노선 ID로 버스 정류소 가져오기
-        getStation(routeId,applicontext)
+        getStation(routeNm,routeId,applicontext)
     }
     //getBusRouteId 복사
 
 
-    fun getStation(routeId:String, applicontext : Context) {
+    fun getStation(routeNum : String ,routeId:String, applicontext : Context) {
         val retrofit = Retrofit.Builder().baseUrl(ApiKeyOne.DOMAIN).
         addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(getStation::class.java)
@@ -96,12 +96,17 @@ class MainController {
             override fun onResponse(call: Call<Bus>, response: Response<Bus>) {
                 if (response.isSuccessful){
                     if(response.body()?.msgBody?.itemList != null) {
+                        //출발역, 종착역을 좀 뽑아내 보내야할것같은데..
+
                         var stationList : ArrayList<StationModel> = getStationList(response.body()!!) // 버스 정류장 목록 가져오기
 
                         var intent = Intent(applicontext, StationsActivity::class.java)
 
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         //intent에 모든 정류장 list가 들어있는 stationList를 넘긴다
+                        intent.putExtra("startStationNm",stationList[0].stationNm)
+                        intent.putExtra("finishStationNm",stationList[stationList.size-1].stationNm)
+                        intent.putExtra("routeNum",routeNum)
                         intent.putExtra("stationList",stationList)
                         applicontext.startActivity(intent)
 
@@ -132,6 +137,7 @@ class MainController {
             //viewModel.addItem(StationModel(item.stationNm, item.station)) // 정류소 이름, ID 목록으로 붙이기
             Log.d("Api", body.msgBody.itemList[i].stationNm)
         }
+
         // 정류소 이름 목록들 텍스트뷰에 붙이기
         //binding.textStation.text = stList
         //다 채운 station들을(ArrayList) return

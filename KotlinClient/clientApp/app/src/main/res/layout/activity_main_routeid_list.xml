@@ -7,10 +7,13 @@
 
     <TextView
         android:id="@+id/routeId"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_margin="10dp"
+        android:text=""
+        android:layout_margin="6dp"
+        android:padding="10dp"
+        android:fontFamily="@font/imcresoojin"
+        android:background="@drawable/main_textview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -19,7 +22,7 @@
         android:id="@+id/noname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text=""
         android:layout_margin="10dp"
         app:layout_constraintStart_toEndOf="@id/routeId"
         app:layout_constraintTop_toTopOf="parent"

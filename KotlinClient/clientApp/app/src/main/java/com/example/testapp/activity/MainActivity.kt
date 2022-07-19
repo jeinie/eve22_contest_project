@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //맨위 보라색 상태바 색상 변경
-        window.statusBarColor = Color.parseColor("#FFFFFF")
+        window.statusBarColor = Color.parseColor("#000000")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -61,10 +61,6 @@ class MainActivity : AppCompatActivity(){
                 //입력중인 상태
                 return true
             }
-
-
-
-
         })
     }
 }
