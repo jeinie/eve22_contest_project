@@ -17,9 +17,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private val viewModel by viewModels<MyViewModel>()
+    //
     lateinit var retrofit: Retrofit
     lateinit var service: SeoulOpenService
-
+    //
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

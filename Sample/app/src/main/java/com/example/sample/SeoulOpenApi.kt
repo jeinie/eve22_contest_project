@@ -12,19 +12,22 @@ object SeoulOpenApi {
 
 interface SeoulOpenService {
     // busRouteInfo/getBusRouteList?serviceKey=[서비스키]&strSrch=6003&resultType=json
+    // (노선 번호)4312를 입력하면 노선 id(10101011001)를 가지고오는
     @GET("busRouteInfo/getBusRouteList?serviceKey=" + SeoulOpenApi.API_KEY)
     fun getBus(
         @Query("strSrch") busNum:String,
         @Query("resultType") resultType:String
     ):Call<Bus>
 
-    //
+    //노선 id로 정류소 목록을 가져온다. 정류소가 쭉 나와서? 그것을 for문으로 그것들만 모아서 나오게 한거다?
     @GET("busRouteInfo/getStaionByRoute?serviceKey=" + SeoulOpenApi.API_KEY)
     fun getStation(
         @Query("busRouteId") busRouteId:String,
         @Query("resultType") resultType:String
     ):Call<Bus>
 
+    // 노선 id를 입력하면 노선id랑 정류소 id 랑 또 순번?으로 정류소에 첫번쨰로 도착하는 bus의 id를 가져옴
+    // 4312 와 노선 id 정류소 id와 순번을 입력하면 그 정류소에 첫번째로 도착하는 bus의 id를 가져온다
     // (2) getArrInfoByRouteLis (버스도착예정)
     @GET("arrive/getArrInfoByRoute?=serviceKey=" + SeoulOpenApi.API_KEY)
     fun getArrive(
