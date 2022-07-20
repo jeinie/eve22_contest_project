@@ -2,23 +2,29 @@ package com.example.testapp.controller.mainController
 
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.util.Log
+import android.widget.Toast
 import com.example.testapp.Model.BusModel.Bus
+import com.example.testapp.Model.BusModel.ExistedStationModel
 import com.example.testapp.Model.KeyModel.ApiKeyOne
 import com.example.testapp.Model.StationModel.StationModel
-import com.example.testapp.Service.LoginService
-import com.example.testapp.Service.getArrive
 import com.example.testapp.Service.getBus
 import com.example.testapp.Service.getStation
-import com.example.testapp.activity.IndexActivity
 import com.example.testapp.activity.StationsActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import kotlin.coroutines.CoroutineContext
 
-class MainController {
+class MainController{
+
 
     //retrofit으로 버스정보를 검색해서 그 list를 recyclerView에 뿌려주는 역할의 메서드
     //이곳에 장정윤 팀원이 작업한 MainActivity내의 loadBus() , getBusRouteId(), getStation()등을 옮겨야함
@@ -57,30 +63,34 @@ class MainController {
         //일단 메서드 그대로 복사
     }
 
+    //존재하는 버스노선인지 체크
+    fun isRouteExist( routeNum : String ) : ExistedStationModel {
+        val retrofit = Retrofit.Builder().baseUrl(ApiKeyOne.DOMAIN)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val service = retrofit.create(getBus::class.java)
+        //동기가.. 있을텐데?
+        var call: Call<Bus> = service.getBus(routeNum , "json")
+        var body = call.execute().body()
+        //print("무서운집 ${body.msgBody.itemList[0].busRouteId}")
+
+
+        try{
+            return ExistedStationModel(body!!.msgBody.itemList[0].busRouteNm,body.msgBody.itemList[0].busRouteId)
+        }catch (e : Exception){
+            return ExistedStationModel("","")
+        }
+    }
+
+
+
     //getBusRouteId 복사
     // 노선 ID 가져오기               //일단 화면이동이 있는것같으니 applicontext를 추가
     fun getBusRouteId(body: Bus , applicontext : Context) {
         Log.d("뭐뭐들어가지? 2","뭐뭐들어가지? 2")
         val routeId = body.msgBody.itemList[0].busRouteId
         val routeNm = body.msgBody.itemList[0].busRouteNm
-        // binding.textView.text = routeId + "\n" + routeNm // 택스트뷰에 노선 ID 출력
         println("노선 ID는 $routeId")
         println("노선 번호는 $routeNm")
-
-        // 노선 ID와 순번(seq) CustomAdapter 로 보내기
-        //val intent = Intent(this, CustomAdapter::class.java)
-        //이러지말고 그냥 흠...
-        //여기에서
-
-        //잠시 생각
-        //var intent = Intent(applicontext, StationsActivity::class.java)
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        //applicontext.startActivity(intent)
-        //잠시 생각
-
-        //intent.putExtra("routeId", routeId)
-        //intent.putExtra("seq", body.msgBody.itemList[0].seq)
-
         // 가져온 노선 ID로 버스 정류소 가져오기
         getStation(routeNm,routeId,applicontext)
     }

@@ -5,15 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.Model.BusModel.Bus
-import com.example.testapp.Model.BusModel.ExampleModel
+import com.example.testapp.Model.BusModel.ExistedStationModel
 import com.example.testapp.R
 
 //main의 버스 노선 id로 recyclerview를 채우기위한 어댑터
                                                         //변화 :
-class MainCustomAdapter(var listData : ArrayList<ExampleModel>, var onRouteClickedListener:OnRouteClickedListener) : RecyclerView.Adapter<MainCustomAdapter.ViewHolder>() {
+class MainCustomAdapter(var listData : ArrayList<ExistedStationModel>, var onRouteClickedListener:OnRouteClickedListener) : RecyclerView.Adapter<MainCustomAdapter.ViewHolder>() {
     interface OnRouteClickedListener{
-        fun onRouteClicked(model : ExampleModel)
+        fun onRouteClicked(model : ExistedStationModel)
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -35,7 +34,8 @@ class MainCustomAdapter(var listData : ArrayList<ExampleModel>, var onRouteClick
         //여기 다시체크해야한다 말이안되는데..
         var item = listData[position]
         //holder.routeId.text = item.msgBody.itemList[position].busRouteId
-        holder.routeId.text = item.routeId
+        //holder.routeId.text = item.routeId
+        holder.routeId.text = item.stationNm
         //변화 : setonClickListener추가해준부분
         holder.itemView.setOnClickListener {
                                                     //item은 arrayList의 position에 해당되는 item을 가져온것

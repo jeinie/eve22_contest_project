@@ -46,7 +46,9 @@ class IndexActivity : AppCompatActivity() {
         //로그인하는 버튼 이벤트
         L_BTN.setOnClickListener{ view ->
             var icon = IndexController()
-            icon.getLogin(L_UID_TF.text.toString(),L_UPW_TF.text.toString(),applicationContext)
+
+            print(icon.getLogin(L_UID_TF.text.toString(),L_UPW_TF.text.toString(),applicationContext))
+
         }
         //회원가입페이지로가는 버튼 이벤트
         R_BTN.setOnClickListener { view ->

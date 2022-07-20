@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.Model.BusModel.ExampleModel
+import com.example.testapp.Model.BusModel.ExistedStationModel
 import com.example.testapp.Model.StationModel.StationModel
 import com.example.testapp.R
 
 //변화 :
 class StationsCustomAdapter(var listData : ArrayList<StationModel>, var onRouteClickedListener:OnRouteClickedListener) : RecyclerView.Adapter<StationsCustomAdapter.ViewHolder>() {
     interface OnRouteClickedListener{
-        fun onRouteClicked(model : ExampleModel)
+        fun onRouteClicked(model : ExistedStationModel)
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
