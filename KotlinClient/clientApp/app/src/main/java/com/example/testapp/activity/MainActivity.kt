@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext : CoroutineContext
         get() = Dispatchers.Main + job
     //코루틴
-    
 
     lateinit var binding : ActivityMainBinding
     //mainContainer 객체화
@@ -67,35 +66,31 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 //있는 노선이면 add되게
                 var routeNum : String = busNum!!
                 var routeIdList = ArrayList<ExistedStationModel>()
-                Log.d("선생님..?", routeIdList.toString())
+
 
                 launch {
-
                     //var stationInfo = mc.isRouteExist( routeNum )
                     routeIdList = mc.isRouteExist( routeNum )
-                    routeIdList.add(ExistedStationModel("??뭔가요?","넹?"))
-                    Log.d("선생님..?", routeIdList.toString())
-                    //routeIdList.add( stationInfo )
+                    Log.d("선생님..정말로?", routeIdList.toString())
                     if (routeIdList[0].stationNm == ""){
                         Toast.makeText(baseContext,"해당 노선정보가 없습니다",Toast.LENGTH_SHORT).show()
                         routeIdList.clear()
                     }
+                    mca = MainCustomAdapter(routeIdList ,object : MainCustomAdapter.OnRouteClickedListener{
+                        override fun onRouteClicked(model: ExistedStationModel) {
+                            //Toast.makeText(baseContext, "${model.routeId} , ",Toast.LENGTH_SHORT).show()
+                            //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
+                            //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
+                            mc.loadBus(model.stationNm , applicationContext)
+                            Log.d("1","1")
+                        }
+                    })
+                    binding.mainrecyclerView.adapter = mca
+                    mca.notifyDataSetChanged()
+                    //recyclerview 잘나오나 테스트
                 }
 
-                mca = MainCustomAdapter(routeIdList ,object : MainCustomAdapter.OnRouteClickedListener{
 
-                    override fun onRouteClicked(model: ExistedStationModel) {
-                        //Toast.makeText(baseContext, "${model.routeId} , ",Toast.LENGTH_SHORT).show()
-                        //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
-                        //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
-
-                        mc.loadBus(model.stationNm , applicationContext)
-                        Log.d("1","1")
-                    }
-                })
-                binding.mainrecyclerView.adapter = mca
-                mca.notifyDataSetChanged()
-                //recyclerview 잘나오나 테스트
                 return true
             }
             override fun onQueryTextChange(busNum: String?): Boolean {

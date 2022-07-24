@@ -78,7 +78,7 @@ class MainController{
 
             for (i in body!!.msgBody.itemList) {
                 Log.d("추가","추가되었습니다")
-                routeArrayList.add( ExistedStationModel(i.busRouteId,i.busRouteNm) )
+                routeArrayList.add( ExistedStationModel(i.busRouteNm,i.busRouteId) )
             }
             Log.d("추가된 직후 : ",routeArrayList.toString())
             return routeArrayList

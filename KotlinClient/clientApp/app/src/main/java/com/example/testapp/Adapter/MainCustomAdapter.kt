@@ -20,7 +20,6 @@ class MainCustomAdapter(var listData : ArrayList<ExistedStationModel>, var onRou
         var routeId : TextView = itemView.findViewById(R.id.routeId)
         var routeNm : TextView = itemView.findViewById(R.id.routeNm)
     }
-
     // ViewHolder 생성, ViewHolder는 View를 담는 상자
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -33,10 +32,11 @@ class MainCustomAdapter(var listData : ArrayList<ExistedStationModel>, var onRou
     // ViewHolder에 데이터 쓰기
     override fun onBindViewHolder(holder : ViewHolder, position: Int) { // 각 아이템 뷰에 데이터를 셋팅
         //여기 다시체크해야한다 말이안되는데..
+        Log.d("왜안떠??", listData.toString())
         var item = listData[position]
         //holder.routeId.text = item.msgBody.itemList[position].busRouteId
         //holder.routeId.text = item.routeId
-        Log.d("")
+
         holder.routeNm.text = item.stationNm
         holder.routeId.text = item.stationId
         //변화 : setonClickListener추가해준부분
@@ -47,8 +47,6 @@ class MainCustomAdapter(var listData : ArrayList<ExistedStationModel>, var onRou
     }
 
     override fun getItemCount(): Int {
-        Log.d("listData : ",listData.toString())
-        Log.d("listData : ",listData.size.toString())
         return listData.size
     }
 }
