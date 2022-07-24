@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "jspbook",
-    "password": "12345",
-    "database": "prj-maindb",
+    "username": "root",
+    "password": "Rlatmdwl12!",
+    "database": "prj_maindb",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
