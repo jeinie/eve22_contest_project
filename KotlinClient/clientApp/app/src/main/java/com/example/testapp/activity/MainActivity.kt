@@ -12,6 +12,7 @@ import com.example.testapp.Adapter.MainCustomAdapter
 import com.example.testapp.Model.BusModel.Bus
 import com.example.testapp.Model.BusModel.ExistedStationModel
 import com.example.testapp.Model.KeyModel.ApiKeyOne
+import com.example.testapp.Model.RouteModel.RouteModel
 import com.example.testapp.Service.getBus
 import com.example.testapp.controller.mainController.MainController
 import com.example.testapp.databinding.ActivityMainBinding
@@ -57,31 +58,20 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(busNum: String?): Boolean {
-                //제출을 함 (검색 버튼을 눌렀을때)
-                //ㅂㅓ스를 검색하면 그 버스가 있으면
-                Log.d("확인","입력한 버스넘버 : $busNum")
-
-                //recyclerview 잘나오나 테스트
-
-                //있는 노선이면 add되게
                 var routeNum : String = busNum!!
-                var routeIdList = ArrayList<ExistedStationModel>()
 
 
                 launch {
-                    //var stationInfo = mc.isRouteExist( routeNum )
-                    routeIdList = mc.isRouteExist( routeNum )
+                    var routeIdList = mc.isRouteExist( routeNum )
                     Log.d("선생님..정말로?", routeIdList.toString())
-                    if (routeIdList[0].stationNm == ""){
+                    if (routeIdList[0].routeNm == ""){
                         Toast.makeText(baseContext,"해당 노선정보가 없습니다",Toast.LENGTH_SHORT).show()
                         routeIdList.clear()
                     }
                     mca = MainCustomAdapter(routeIdList ,object : MainCustomAdapter.OnRouteClickedListener{
-                        override fun onRouteClicked(model: ExistedStationModel) {
-                            //Toast.makeText(baseContext, "${model.routeId} , ",Toast.LENGTH_SHORT).show()
-                            //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
-                            //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
-                            mc.loadBus(model.stationNm , applicationContext)
+                        override fun onRouteClicked(model: RouteModel) {
+
+                            mc.loadBus(model.routeNm , applicationContext)
                             Log.d("1","1")
                         }
                     })

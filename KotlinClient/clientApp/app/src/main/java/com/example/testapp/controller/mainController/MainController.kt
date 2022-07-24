@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.example.testapp.Model.BusModel.Bus
 import com.example.testapp.Model.BusModel.ExistedStationModel
 import com.example.testapp.Model.KeyModel.ApiKeyOne
+import com.example.testapp.Model.RouteModel.RouteModel
 import com.example.testapp.Model.StationModel.StationModel
 import com.example.testapp.Service.getBus
 import com.example.testapp.Service.getStation
@@ -62,7 +63,7 @@ class MainController{
     }
 
     //존재하는 버스노선인지 체크
-    fun isRouteExist( routeNum : String ) : ArrayList<ExistedStationModel> {
+    fun isRouteExist( routeNum : String ) : ArrayList<RouteModel> {
         val retrofit = Retrofit.Builder().baseUrl(ApiKeyOne.DOMAIN)
             .addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(getBus::class.java)
@@ -70,22 +71,16 @@ class MainController{
 
         var call: Call<Bus> = service.getBus(routeNum , "json")
         var body = call.execute().body()
-        var routeArrayList = ArrayList<ExistedStationModel>()
+        var routeArrayList = ArrayList<RouteModel>()
 
         try{
-            //return ExistedStationModel(body!!.msgBody.itemList[0].busRouteNm,body.msgBody.itemList[0].busRouteId)
-                Log.d("아니죠1..?","...?")
-
             for (i in body!!.msgBody.itemList) {
-                Log.d("추가","추가되었습니다")
-                routeArrayList.add( ExistedStationModel(i.busRouteNm,i.busRouteId) )
+                routeArrayList.add( RouteModel(i.busRouteNm,i.busRouteId) )
             }
-            Log.d("추가된 직후 : ",routeArrayList.toString())
             return routeArrayList
         }catch (e : Exception){
-            var ecp1 = ArrayList<ExistedStationModel>()
-            Log.d("아니죠2..?","...?")
-            ecp1.add(ExistedStationModel("",""))
+            var ecp1 = ArrayList<RouteModel>()
+            ecp1.add(RouteModel("",""))
             return ecp1
         }
         return routeArrayList
@@ -119,7 +114,7 @@ class MainController{
                         //출발역, 종착역을 좀 뽑아내 보내야할것같은데..
 
                         var stationList : ArrayList<StationModel> = getStationList(response.body()!!) // 버스 정류장 목록 가져오기
-
+                        Log.d("station정보는 뭐넘어오지","${response.body()!!}")
                         var intent = Intent(applicontext, StationsActivity::class.java)
 
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

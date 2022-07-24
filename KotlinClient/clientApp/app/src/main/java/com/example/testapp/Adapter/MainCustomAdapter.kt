@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.Model.BusModel.ExistedStationModel
+
+import com.example.testapp.Model.RouteModel.RouteModel
 import com.example.testapp.R
 
 //main의 버스 노선 id로 recyclerview를 채우기위한 어댑터
                                                         //변화 :
-class MainCustomAdapter(var listData : ArrayList<ExistedStationModel>, var onRouteClickedListener:OnRouteClickedListener) : RecyclerView.Adapter<MainCustomAdapter.ViewHolder>() {
+class MainCustomAdapter(var listData : ArrayList<RouteModel>, var onRouteClickedListener:OnRouteClickedListener) : RecyclerView.Adapter<MainCustomAdapter.ViewHolder>() {
     interface OnRouteClickedListener{
-        fun onRouteClicked(model : ExistedStationModel)
+        fun onRouteClicked(model : RouteModel)
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -34,11 +35,9 @@ class MainCustomAdapter(var listData : ArrayList<ExistedStationModel>, var onRou
         //여기 다시체크해야한다 말이안되는데..
         Log.d("왜안떠??", listData.toString())
         var item = listData[position]
-        //holder.routeId.text = item.msgBody.itemList[position].busRouteId
-        //holder.routeId.text = item.routeId
 
-        holder.routeNm.text = item.stationNm
-        holder.routeId.text = item.stationId
+        holder.routeNm.text = item.routeNm
+        holder.routeId.text = item.busId
         //변화 : setonClickListener추가해준부분
         holder.itemView.setOnClickListener {
                                                     //item은 arrayList의 position에 해당되는 item을 가져온것
