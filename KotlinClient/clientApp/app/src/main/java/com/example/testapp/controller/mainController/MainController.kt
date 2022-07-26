@@ -148,7 +148,7 @@ class MainController{
             }
             //stList += item.stationNm + '\n' // 정류소 이름 계속 붙여나가기
             //이곳에서 모든 정류장 list가 담기는듯한데..전부 ArrayList에 담고서.. return하자
-            stationList.add(StationModel( item.stationNm , item.station ))
+            stationList.add(StationModel( item.stationNm , item.station ,(i+1).toString()))
             //viewModel.addItem(StationModel(item.stationNm, item.station)) // 정류소 이름, ID 목록으로 붙이기
             Log.d("Api", body.msgBody.itemList[i].stationNm)
         }
