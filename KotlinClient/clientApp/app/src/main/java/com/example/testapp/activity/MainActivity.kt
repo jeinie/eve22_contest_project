@@ -79,8 +79,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                     mca.notifyDataSetChanged()
                     //recyclerview 잘나오나 테스트
                 }
-
-
                 return true
             }
             override fun onQueryTextChange(busNum: String?): Boolean {

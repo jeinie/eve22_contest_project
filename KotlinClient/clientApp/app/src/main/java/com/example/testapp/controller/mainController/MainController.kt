@@ -122,6 +122,7 @@ class MainController{
                         intent.putExtra("startStationNm",stationList[0].stationNm)
                         intent.putExtra("finishStationNm",stationList[stationList.size-1].stationNm)
                         intent.putExtra("routeNum",routeNum)
+                        intent.putExtra("routeId",routeId)
                         intent.putExtra("stationList",stationList)
                         applicontext.startActivity(intent)
 

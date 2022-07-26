@@ -25,9 +25,14 @@ class StationsActivity : AppCompatActivity(){
         setContentView(binding.root)
         //여기까지 기본화면 구성완료
 
+        sc = StationsController()
+
+
         val stationList : ArrayList<StationModel> = intent.getSerializableExtra("stationList") as
         ArrayList<StationModel>
         var routeNum : String? = intent.getStringExtra("routeNum")
+        var routeId : String? = intent.getStringExtra("routeId")
+
         binding.routeNumTextView.text = routeNum
         binding.startAndEndStationTextView.text = intent.getStringExtra("startStationNm") + "<---> " +intent.getStringExtra("finishStationNm")
 
@@ -42,10 +47,17 @@ class StationsActivity : AppCompatActivity(){
                 //sc.loadBus(model.routeId,applicationContext)
                 print("item별 model.ord : ${model.ord}")
                 Log.d("item확인","item별 model.ord : ${model.ord}")
+
+                print("item별 routeId : ${routeId}")
+                Log.d("item확인","item별 routeId : ${routeId}")
+
+
                 print("item별 model.stationId : ${model.stationId}")
-                Log.d("item확인","item별 model.ord : ${model.stationId}")
+                Log.d("item확인","item별 model.stationId : ${model.stationId}")
                 print("item별 model.stationNm : ${model.stationNm}")
-                Log.d("item확인","item별 model.ord : ${model.stationNm}")
+                Log.d("item확인","item별 model.stationNm : ${model.stationNm}")
+                sc.getArriveBus(model.stationId,routeId!!,model.ord,applicationContext)
+
             }
         })
         binding.stationsrecyclerView.adapter = sca

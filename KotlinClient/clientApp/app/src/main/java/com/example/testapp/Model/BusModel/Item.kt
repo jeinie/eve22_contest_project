@@ -27,5 +27,15 @@ data class Item (
     val posY: String,
     val vehId1: String, // 첫번째 도착예정버스 ID
     val plainNo1:String, // 첫번째 도착예정 차량번호
-    val sectOrd1:String // 첫번째 도착예정버스 현재구간 순번
+    //val sectOrd1:String // 첫번째 도착예정버스 현재구간 순번
+    //도착예정 정보때문에 아래추가
+    val sectOrd1 : String,//sectOrd1 : 도착예정버스의 현재구간 순번
+    val traTime1 : String, //도착예정버스의 여행시간..?
+    val exps1 : String, //무슨..? 첫번째 도착예정버스의 지수평활 도착예정시간 (초)
+    val exps2 : String, //허허..? 두번째 도착예정버스의 지수평활 도착예정시간 (초)
+    val kals1 : String, //첫번째 도착에정 버스의 기타1 도착예정시간 (초)
+    val kals2 : String //두번째 도착예정 버스의 기타1 도착예정시간 (초)
+
+
+
 )
