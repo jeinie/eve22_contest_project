@@ -27,7 +27,6 @@ class StationsActivity : AppCompatActivity(){
 
         sc = StationsController()
 
-
         val stationList : ArrayList<StationModel> = intent.getSerializableExtra("stationList") as
         ArrayList<StationModel>
         var routeNum : String? = intent.getStringExtra("routeNum")
@@ -45,18 +44,11 @@ class StationsActivity : AppCompatActivity(){
                 //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
                 //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
                 //sc.loadBus(model.routeId,applicationContext)
-                print("item별 model.ord : ${model.ord}")
                 Log.d("item확인","item별 model.ord : ${model.ord}")
-
-                print("item별 routeId : ${routeId}")
                 Log.d("item확인","item별 routeId : ${routeId}")
-
-
-                print("item별 model.stationId : ${model.stationId}")
                 Log.d("item확인","item별 model.stationId : ${model.stationId}")
-                print("item별 model.stationNm : ${model.stationNm}")
                 Log.d("item확인","item별 model.stationNm : ${model.stationNm}")
-                sc.getArriveBus(model.stationId,routeId!!,model.ord,applicationContext)
+                sc.getArriveBus(model.stationId,routeId!!,model.ord,routeNum!!,model.stationNm,applicationContext)
 
             }
         })
