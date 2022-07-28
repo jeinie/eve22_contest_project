@@ -10,7 +10,8 @@ import com.example.testapp.Model.StationModel.StationModel
 import com.example.testapp.R
 
 //변화 :
-class StationsCustomAdapter(var listData : ArrayList<StationModel>, var onRouteClickedListener:OnRouteClickedListener) : RecyclerView.Adapter<StationsCustomAdapter.ViewHolder>() {
+class StationsCustomAdapter(var listData : ArrayList<StationModel>, var onRouteClickedListener
+:OnRouteClickedListener) : RecyclerView.Adapter<StationsCustomAdapter.ViewHolder>() {
     interface OnRouteClickedListener{
         fun onRouteClicked(model : StationModel)
     }

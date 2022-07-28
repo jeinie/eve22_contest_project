@@ -33,9 +33,9 @@ class StationsController {
 
                         var arriveBusList = ArrayList<ArriveBusInfo>()
                         //첫번째 버스 넣어줌
-                        arriveBusList.add(ArriveBusInfo(response.body()!!.msgBody.itemList[0].arrmsg1,response.body()!!.msgBody.itemList[0].vehId1))
+                        arriveBusList.add(ArriveBusInfo(response.body()!!.msgBody.itemList[0].arrmsg1,response.body()!!.msgBody.itemList[0].vehId1,routeNum))
                         //두번째 버스 넣어줌
-                        arriveBusList.add(ArriveBusInfo(response.body()!!.msgBody.itemList[0].arrmsg2,response.body()!!.msgBody.itemList[0].vehId2))
+                        arriveBusList.add(ArriveBusInfo(response.body()!!.msgBody.itemList[0].arrmsg2,response.body()!!.msgBody.itemList[0].vehId2,routeNum))
                         var intent = Intent(applicontext, BusesAtStationAcitivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         intent.putExtra("stId",stId)
