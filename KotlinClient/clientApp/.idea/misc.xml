@@ -11,8 +11,8 @@
         <entry key="app/src/main/res/drawable/index_register_btn.xml" value="0.1675925925925926" />
         <entry key="app/src/main/res/drawable/main_textview.xml" value="0.2722222222222222" />
         <entry key="app/src/main/res/font/font.xml" value="0.2574074074074074" />
-        <entry key="app/src/main/res/layout/activity_bus_list_at_station.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_bus_list_at_station_bus_list.xml" value="0.4742063492063492" />
+        <entry key="app/src/main/res/layout/activity_bus_list_at_station.xml" value="0.21910112359550563" />
+        <entry key="app/src/main/res/layout/activity_bus_list_at_station_bus_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_index.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main_routeid_list.xml" value="0.17" />

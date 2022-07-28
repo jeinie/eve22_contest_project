@@ -55,6 +55,9 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:nestedScrollingEnabled="false"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
