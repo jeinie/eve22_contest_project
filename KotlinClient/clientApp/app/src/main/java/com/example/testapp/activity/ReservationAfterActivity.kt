@@ -142,7 +142,7 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
 
         val locationRequest = LocationRequest.create().apply{
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 1000
+            interval = 5000
         }
         /*
         locationRequest.run {
@@ -154,6 +154,7 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
             override fun onLocationResult(locationResult: LocationResult?) {
 
                 //locationResult?.let {
+                launch {
                     for(location in locationResult!!.locations) {
                         Log.d("뭐 어떻게 되는건지","뭐 어떻게 되는건지")
                         busCoordinate = rac.getBusPositionRepeat(vehId = vehId)
@@ -167,6 +168,7 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
                         setLastLocation(location)
                     }
                 //}
+                }
 
             }
         }
@@ -188,6 +190,11 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
         mMap.clear()
         mMap.addMarker(markerOptions)
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 }
 
