@@ -46,6 +46,8 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
     private lateinit var tmx : String
     private lateinit var tmy : String
     private lateinit var vehId : String
+    private lateinit var stName : String
+    private lateinit var routeNum : String
     private lateinit var busCoordinate : BusCoordinateModel
 
 
@@ -65,6 +67,11 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
         tmx = intent.getStringExtra("tmX")!!
         tmy = intent.getStringExtra("tmY")!!
         vehId = intent.getStringExtra("vehId")!!
+        stName = intent.getStringExtra("stName")!!
+        routeNum = intent.getStringExtra("routeNum")!!
+
+        binding.stNameTextView.text = stName
+        binding.routeNumTextView.text = routeNum
 
         if ( Build.VERSION.SDK_INT > 9 ){
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -166,6 +173,7 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
 
                         Log.d("엥??","tmx : ${tmx.toDouble()} , tmy : ${tmy.toDouble()}")
                         setLastLocation(location)
+                        delay(5000L)
                     }
                 //}
                 }
@@ -192,8 +200,14 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
-    override fun onDestroy() {
+    override fun onBackPressed() {
         job.cancel()
+        //Toast.makeText(applicationContext,"예약이 취소되었습니다",Toast.LENGTH_SHORT)
+        super.onBackPressed()
+        //super.onDestroy()
+    }
+
+    override fun onDestroy() {
         super.onDestroy()
     }
 }

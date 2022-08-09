@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class BusesAtStationController {
-    fun getBusPosition( vehId : String , applicontext : Context ){
+    fun getBusPosition( vehId : String , stName : String , routeNum : String , applicontext : Context ){
         val retrofit = Retrofit.Builder().baseUrl(ApiKeyThree.DOMAIN).addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(getBusPos::class.java)
         Log.d("대체 무슨일 ","vehId : ${vehId}")
@@ -33,6 +33,8 @@ class BusesAtStationController {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
                         intent.putExtra("vehId",vehId)
+                        intent.putExtra("stName",stName)
+                        intent.putExtra("routeNum",routeNum)
                         intent.putExtra("tmX",response.body()!!.msgBody.itemList[0].tmX)
                         intent.putExtra("tmY",response.body()!!.msgBody.itemList[0].tmY)
                         Log.d("넘기는 정보들은","vehId : ${vehId} \ntmX : ${response.body()!!.msgBody.itemList[0].tmX}\ntmY : ${response.body()!!.msgBody.itemList[0].tmY}")

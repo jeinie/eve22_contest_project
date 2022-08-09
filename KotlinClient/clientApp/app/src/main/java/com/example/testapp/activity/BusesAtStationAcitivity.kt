@@ -97,13 +97,9 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
                             DialogInterface.BUTTON_POSITIVE ->
                             {
                                 Toast.makeText(baseContext,"예약되었습니다.",Toast.LENGTH_SHORT).show()
-                                //var intent = Intent(applicationContext, ReservationAfterActivity::class.java)
                                 Log.d("클릭한 버스의 아이디 : ","${model.vehId}")
-                                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                basc.getBusPosition(model.vehId,applicationContext)
-                                //startActivity(intent)
+                                basc.getBusPosition(model.vehId,stationNm!!,model.routeNum,applicationContext)
                             }
-
                             DialogInterface.BUTTON_NEGATIVE ->
                                 Log.d("그냥취소","그냥취소")
                             DialogInterface.BUTTON_NEUTRAL ->
