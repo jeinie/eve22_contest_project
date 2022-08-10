@@ -3,7 +3,9 @@ package com.example.testapp.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -22,9 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -50,7 +50,7 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
     private lateinit var routeNum : String
     private lateinit var busCoordinate : BusCoordinateModel
 
-
+    private lateinit var discriptor : BitmapDescriptor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.parseColor("#90008000")
@@ -133,14 +133,16 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
         mMap = googleMap
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         updateLocation()
-        /*
-        launch {
-            while (true) {
-                Thread.sleep(10000)
-                updateLocation()
 
-            }
-        }*/
+        var bitmapDrawable: BitmapDrawable
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            bitmapDrawable = getDrawable(R.drawable.marker) as BitmapDrawable
+        } else {
+            bitmapDrawable = resources.getDrawable(R.drawable.marker) as BitmapDrawable
+        }
+        var scaledBitmap = Bitmap.createScaledBitmap(bitmapDrawable.bitmap, 55, 55, false)
+        discriptor = BitmapDescriptorFactory.fromBitmap(scaledBitmap)
     }
 
     // 위치 정보를 받아오는 역할
@@ -151,12 +153,7 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             interval = 5000
         }
-        /*
-        locationRequest.run {
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 1000
-        }
-        */
+
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
 
@@ -187,13 +184,19 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
 
     fun setLastLocation(lastLocation: Location) {
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
-        val markerOptions = MarkerOptions()
+
+
+
+        var markerOptions = MarkerOptions()
             .position(LATLNG)
-            .title("Here!")
+            .title("Marker in Seoul City Hall")
+            .icon(discriptor)
+
+        //mMap.addMarker(markerOptions)
 
         val cameraPosition = CameraPosition.Builder()
             .target(LATLNG)
-            .zoom(15.0f)
+            .zoom(13.0f)
             .build()
         mMap.clear()
         mMap.addMarker(markerOptions)
@@ -202,9 +205,8 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
 
     override fun onBackPressed() {
         job.cancel()
-        //Toast.makeText(applicationContext,"예약이 취소되었습니다",Toast.LENGTH_SHORT)
+        Toast.makeText(baseContext ,"예약이 취소되었습니다",Toast.LENGTH_SHORT).show()
         super.onBackPressed()
-        //super.onDestroy()
     }
 
     override fun onDestroy() {
