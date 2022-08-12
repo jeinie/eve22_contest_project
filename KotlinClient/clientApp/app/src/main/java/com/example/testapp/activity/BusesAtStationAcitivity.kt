@@ -115,7 +115,7 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
                                 val service = retrofit.create(BusPassengersInfo::class.java)
 
 
-                                service.getBusStatus("111000", "부평구청").enqueue(object :
+                                service.getBusStatus(model.vehId, stationNm!!).enqueue(object :
                                     Callback<RegisterInfo> {
                                     override fun onResponse(call: Call<RegisterInfo>, response: Response<RegisterInfo>) {
                                         Log.d("버튼 눌림 3 ", "버튼 눌렸습니다 3")
