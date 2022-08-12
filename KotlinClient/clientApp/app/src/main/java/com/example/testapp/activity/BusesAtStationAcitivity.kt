@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 
 import androidx.appcompat.app.AppCompatActivity
+import com.example.buspassenger.Model.RegisterInfo
+import com.example.buspassenger.Service.BusPassengersInfo
 import com.example.testapp.Adapter.BusesAtStationCustomeAdapter
 
 import com.example.testapp.Model.ArriveBusInfo.ArriveBusInfo
@@ -19,6 +21,11 @@ import com.example.testapp.databinding.ActivityBusListAtStationBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.coroutines.CoroutineContext
 
 class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
@@ -96,9 +103,42 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
                         when (p1) {
                             DialogInterface.BUTTON_POSITIVE ->
                             {
-                                Toast.makeText(baseContext,"예약되었습니다.",Toast.LENGTH_SHORT).show()
-                                Log.d("클릭한 버스의 아이디 : ","${model.vehId}")
-                                basc.getBusPosition(model.vehId,stationNm!!,model.routeNum,applicationContext)
+
+
+
+
+                                //문제생길듯..
+                                var registerNum = 0
+
+                                val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:3000")
+                                    .addConverterFactory(GsonConverterFactory.create()).build()
+                                val service = retrofit.create(BusPassengersInfo::class.java)
+
+
+                                service.getBusStatus("111000", "부평구청").enqueue(object :
+                                    Callback<RegisterInfo> {
+                                    override fun onResponse(call: Call<RegisterInfo>, response: Response<RegisterInfo>) {
+                                        Log.d("버튼 눌림 3 ", "버튼 눌렸습니다 3")
+                                        if (response.isSuccessful) {
+                                            Log.d("res", response.body().toString())
+                                            Log.d("registerNum", "현재 예약 인원 ${registerNum}")
+                                            Toast.makeText(baseContext,"예약되었습니다.",Toast.LENGTH_SHORT).show()
+                                            Log.d("클릭한 버스의 아이디 : ","${model.vehId}")
+                                            basc.getBusPosition(model.vehId,stationNm!!,model.routeNum,applicationContext)
+
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<RegisterInfo>, t: Throwable) {
+                                        Log.d("버튼 눌림 4", "버튼 눌렸습니다 4")
+                                        Log.d("res", "onResponse 실패")
+
+                                    }
+                                })
+
+                                //문제생길듯..
+
+
                             }
                             DialogInterface.BUTTON_NEGATIVE ->
                                 Log.d("그냥취소","그냥취소")
