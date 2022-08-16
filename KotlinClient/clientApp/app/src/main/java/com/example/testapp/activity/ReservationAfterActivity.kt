@@ -15,8 +15,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.buspassenger.Model.RegisterInfo
+import com.example.buspassenger.Service.getReservation
 import com.example.testapp.Model.BusCoordinateModel.BusCoordinateModel
 import com.example.testapp.R
+import com.example.testapp.Service.cancelReservation
 import com.example.testapp.controller.ReservationAfterController.ReservationAfterController
 import com.example.testapp.databinding.ActivityReservationAfterBinding
 import com.google.android.gms.location.*
@@ -26,6 +29,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.coroutines.CoroutineContext
 
 class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , CoroutineScope {
@@ -203,14 +211,40 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
-    override fun onBackPressed() {
-        job.cancel()
-        Toast.makeText(baseContext ,"예약이 취소되었습니다",Toast.LENGTH_SHORT).show()
-        super.onBackPressed()
-    }
 
     override fun onDestroy() {
         super.onDestroy()
     }
+
+    override fun onBackPressed() {
+        //문제생길듯..
+        val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:3000")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val service = retrofit.create(cancelReservation::class.java)
+
+
+
+        service.cancelBusReservation(vehId, stName).enqueue(object :
+            Callback<RegisterInfo> {
+            override fun onResponse(call: Call<RegisterInfo>, response: Response<RegisterInfo>) {
+                Log.d("버튼 눌림 3 ", "버튼 눌렸습니다 3")
+                if (response.isSuccessful) {
+                    //Log.d("res", response.body().toString())
+                    job.cancel()
+                    Toast.makeText(baseContext ,"예약이 취소되었습니다",Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
+
+            override fun onFailure(call: Call<RegisterInfo>, t: Throwable) {
+                Log.d("버튼 눌림 4", "버튼 눌렸습니다 4")
+                Log.d("res", "onResponse 실패")
+            }
+        })
+        //문제생길듯..
+
+    }
+
+
 }
 

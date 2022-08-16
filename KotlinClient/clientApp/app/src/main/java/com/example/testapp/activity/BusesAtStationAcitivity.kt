@@ -1,7 +1,6 @@
 package com.example.testapp.activity
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -12,10 +11,11 @@ import androidx.appcompat.app.AlertDialog
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.buspassenger.Model.RegisterInfo
-import com.example.buspassenger.Service.BusPassengersInfo
+import com.example.buspassenger.Service.getReservation
 import com.example.testapp.Adapter.BusesAtStationCustomeAdapter
 
 import com.example.testapp.Model.ArriveBusInfo.ArriveBusInfo
+import com.example.testapp.Service.cancelReservation
 import com.example.testapp.controller.BusesAtStationController.BusesAtStationController
 import com.example.testapp.databinding.ActivityBusListAtStationBinding
 import kotlinx.coroutines.CoroutineScope
@@ -103,27 +103,21 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
                         when (p1) {
                             DialogInterface.BUTTON_POSITIVE ->
                             {
-
-
-
-
                                 //문제생길듯..
-                                var registerNum = 0
-
                                 val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:3000")
                                     .addConverterFactory(GsonConverterFactory.create()).build()
-                                val service = retrofit.create(BusPassengersInfo::class.java)
+                                val service = retrofit.create(getReservation::class.java)
 
 
-                                service.getBusStatus(model.vehId, stationNm!!).enqueue(object :
+                                service.getBusReservation(model.vehId, stationNm!!).enqueue(object :
                                     Callback<RegisterInfo> {
                                     override fun onResponse(call: Call<RegisterInfo>, response: Response<RegisterInfo>) {
                                         Log.d("버튼 눌림 3 ", "버튼 눌렸습니다 3")
                                         if (response.isSuccessful) {
-                                            Log.d("res", response.body().toString())
-                                            Log.d("registerNum", "현재 예약 인원 ${registerNum}")
+                                            //Log.d("res", response.body().toString())
+                                            //Log.d("registerNum", "현재 예약 인원 ${registerNum}")
                                             Toast.makeText(baseContext,"예약되었습니다.",Toast.LENGTH_SHORT).show()
-                                            Log.d("클릭한 버스의 아이디 : ","${model.vehId}")
+                                            //Log.d("클릭한 버스의 아이디 : ","${model.vehId}")
                                             basc.getBusPosition(model.vehId,stationNm!!,model.routeNum,applicationContext)
 
                                         }
@@ -135,21 +129,18 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
 
                                     }
                                 })
-
                                 //문제생길듯..
 
 
                             }
                             DialogInterface.BUTTON_NEGATIVE ->
                                 Log.d("그냥취소","그냥취소")
-                            DialogInterface.BUTTON_NEUTRAL ->
-                                Log.d("예약취소","예약취소")
+
                         }
                     }
                 }
                 DialogBuilder.setPositiveButton("예약하기",DialogBuilderListener)
                 DialogBuilder.setNegativeButton("취소",DialogBuilderListener)
-                DialogBuilder.setNeutralButton("예약취소",DialogBuilderListener)
                 DialogBuilder.show()
                 //여기까지 다이얼로그
             }
@@ -160,4 +151,7 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
         //recyclerv
 
     }
+
+
+
 }
