@@ -8,18 +8,20 @@ import android.webkit.WebViewClient
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.testapp.controller.mainController.MainController
 import com.example.testapp.databinding.ActivityMainBinding
 import com.google.zxing.integration.android.IntentIntegrator
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
+    lateinit var mc : MainController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.parseColor("#FFFFFF")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        mc = MainController()
 
         // QR 코드 버튼 이벤트
         binding.button.setOnClickListener {
@@ -54,12 +56,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "scanned" + result.contents, Toast.LENGTH_LONG).show()
                 Log.d("TTT", "QR 코드 URL:${result.contents}")
 
-                //웹뷰 설정
-                binding.webView.settings.javaScriptEnabled = true
-                binding.webView.webViewClient = WebViewClient()
+                mc.getBusRouteIdAndVehId(result.contents,applicationContext)
 
-                //웹뷰를 띄운다.
-                binding.webView.loadUrl(result.contents)
             }
             // 결과가 없으면
         } else {
