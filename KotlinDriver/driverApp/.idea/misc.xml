@@ -5,6 +5,9 @@
       <map>
         <entry key="app/src/main/res/drawable/bg_qr_button.xml" value="0.16018518518518518" />
         <entry key="app/src/main/res/drawable/index_id_pw_btn.xml" value="0.16018518518518518" />
+        <entry key="app/src/main/res/layout/activity_driving.xml" value="0.2261904761904762" />
+        <entry key="app/src/main/res/layout/activity_driving_station_list.xml" value="0.2644927536231884" />
+        <entry key="app/src/main/res/layout/activity_index.xml" value="0.2261904761904762" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16185410334346503" />
         <entry key="app/src/main/res/layout/activity_regist.xml" value="0.16185410334346503" />
       </map>

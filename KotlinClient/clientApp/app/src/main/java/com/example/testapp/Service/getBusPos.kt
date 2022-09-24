@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface getBusPos {
+    //@GET("buspos/getBusPosByVehIdItem?serviceKey=" + ApiKeyThree.API_KEY)
     @GET("buspos/getBusPosByVehId?serviceKey=" + ApiKeyThree.API_KEY)
     fun getBusPos(
         @Query("vehId") vehId:String,

@@ -60,6 +60,7 @@
             android:nestedScrollingEnabled="false"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            tools:listitem="@layout/activity_stations_station_list"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

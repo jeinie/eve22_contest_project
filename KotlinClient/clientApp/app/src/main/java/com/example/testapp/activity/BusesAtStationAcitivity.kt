@@ -118,6 +118,7 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
                                             //Log.d("registerNum", "현재 예약 인원 ${registerNum}")
                                             Toast.makeText(baseContext,"예약되었습니다.",Toast.LENGTH_SHORT).show()
                                             //Log.d("클릭한 버스의 아이디 : ","${model.vehId}")
+                                            Log.d("정보가 제대로 안넘어오나? : ",model.vehId+" : "+stationNm!!+" : "+model.routeNum)
                                             basc.getBusPosition(model.vehId,stationNm!!,model.routeNum,applicationContext)
 
                                         }
