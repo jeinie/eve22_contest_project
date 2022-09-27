@@ -140,6 +140,7 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         updateLocation()
 
         var bitmapDrawable: BitmapDrawable

@@ -19,7 +19,7 @@ import java.lang.Exception
 class MainController {
     lateinit var routeNum : String
     lateinit var vehId : String
-    lateinit var busRouteId : String
+    //lateinit var busRouteId : String
 
     //운전석에서 QR코드를 찍어 버스 노선id와 버스의 고유 vehId를 가져온다
     //Driving페이지로 넘어갈때에 RecyclerView에서 사용할 arraylist를 가지고 넘어간다
@@ -29,10 +29,12 @@ class MainController {
         //qr의 형태는 4312,차량고유id,버스노선id 이렇게 될것
         //또는 버스노선번호, 차량고유id 가 될 것 상황에 따라 위아래로 달라질듯
         this.routeNum = qrToString.split(",")[0]
-        this.vehId = qrToString.split(",")[1]
+        this.vehId = qrToString.split(",")[2]
         //this.busRouteId = qrToString.split(",")[2]
 
+        Log.d("routeNum : ","${this.routeNum}")
         Log.d("vehId : ","${this.vehId}")
+
         //Log.d("busRouteId : ","${this.busRouteId}")
 
         //var intent = Intent(applicontext , DrivingActivity::class.java)
@@ -153,6 +155,8 @@ class MainController {
                         intent.putExtra("routeNum",routeNum)
                         intent.putExtra("routeId",routeId)
                         intent.putExtra("stationList",stationList)
+                        intent.putExtra("vehId",vehId)
+                        Log.d("getStation vehId : ","${vehId}")
                         applicontext.startActivity(intent)
 
                         //ArrayList에 담긴 station목록들을 intent에 담아서 stationsActivity에 넘겨야지
@@ -178,7 +182,7 @@ class MainController {
             }
             //stList += item.stationNm + '\n' // 정류소 이름 계속 붙여나가기
             //이곳에서 모든 정류장 list가 담기는듯한데..전부 ArrayList에 담고서.. return하자
-            stationList.add(StationModel( item.stationNm , item.station ,(i+1).toString()))
+            stationList.add(StationModel( item.stationNm , item.station ,(i+1).toString() , ""))
             //viewModel.addItem(StationModel(item.stationNm, item.station)) // 정류소 이름, ID 목록으로 붙이기
             Log.d("Api", body.msgBody.itemList[i].stationNm)
         }

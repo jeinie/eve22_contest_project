@@ -39,4 +39,19 @@ router.get("/cancelReservation", (req, res) => {
   res.json(data);
 });
 
+router.post("/wcfeStation", (req, res) => {
+  console.log(`wcfeStation 버스 고유 아이디 ${req.body.vehId}`);
+
+  var keys = Object.keys(jsonStatus);
+  var vehIdArr = {};
+
+  for (var i = 0; i < keys.length; i++) {
+    if (keys[i].split(",")[0] == req.body.vehId) {
+      vehIdArr[keys[i].split(",")[1]] = jsonStatus[keys[i]];
+    }
+  }
+  console.log(`wcfeStation 보내는데이터는 : ${vehIdArr}`);
+  res.json({ StationAndWaiting: JSON.stringify(vehIdArr) });
+});
+
 module.exports = router;

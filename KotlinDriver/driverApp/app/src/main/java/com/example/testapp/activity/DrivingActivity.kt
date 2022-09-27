@@ -1,24 +1,43 @@
 package com.example.testapp.activity
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.os.StrictMode
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapp.Adapter.DrivingCustomAdapter
 import com.example.testapp.Model.StationModel.StationModel
+import com.example.testapp.Model.WaitingCntForEachStationModel.WaitingCntForEachStation
 import com.example.testapp.controller.drivingController.DrivingController
 import com.example.testapp.databinding.ActivityDrivingBinding
 import com.example.testapp.databinding.ActivityIndexBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
+import kotlin.coroutines.CoroutineContext
+import kotlin.reflect.typeOf
 
-class DrivingActivity : AppCompatActivity() {
+
+
+
+class DrivingActivity : AppCompatActivity() , CoroutineScope{
+
+    private lateinit var job : Job
+    override val coroutineContext : CoroutineContext
+        get() = Dispatchers.Main + job
 
     lateinit var binding : ActivityDrivingBinding
     lateinit var dc : DrivingController
     lateinit var dca : DrivingCustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+        job = Job()
 
         window.statusBarColor = Color.parseColor("#000000")
         binding = ActivityDrivingBinding.inflate(layoutInflater)
@@ -26,22 +45,61 @@ class DrivingActivity : AppCompatActivity() {
 
         dc = DrivingController()
 
-
-
+        if (Build.VERSION.SDK_INT > 9) {
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+        }
 
 
         //
 
         val stationList : ArrayList<StationModel> = intent.getSerializableExtra("stationList") as ArrayList<StationModel>
-        var route : String? = intent.getStringExtra("routeNum")
 
+        var routeNum : String? = intent.getStringExtra("routeNum")
         var vehId : String? = intent.getStringExtra("vehId")
-        var busRouteId : String? = intent.getStringExtra("busRouteId")
+        var routeId : String? = intent.getStringExtra("routeId")
 
+        Log.d("DrivingActivity에서의 routeNum : ","${routeNum}")
+        Log.d("DrivingActivity에서의 vehId : ","${vehId}")
+        Log.d("DrivingActivity에서의 busRouteId : ","${routeId}")
         //intent.putExtra("vehId",this.vehId)
         //intent.putExtra("busRouteId",this.busRouteId)
 
+        //WCFES = WaitingCntForEachStation
 
+        launch {
+            thread(start = true) {
+                while (true) {
+
+                    Log.d("갱신 : ", "갱신되었음")
+
+                    var WCFES = dc.getWaitingCntForEachStation(vehId!!).StationAndWaiting!!
+
+                    WCFES = WCFES.replace("{", "").replace("}", "").replace("\"", "")
+
+                    var WCFESArr = WCFES.split(",")
+
+                    WCFESArr.forEach { data ->
+
+                        for (i: Int in 0 until stationList.size) {
+
+                            if ((data.split(":")[0]).equals(stationList[i].stationNm)) {
+
+                                stationList[i].waitingCnt = data.split(":")[1]
+
+                            }
+
+                        }
+
+                    }
+                    Thread.sleep(5000L)
+                }
+                //while문 끝
+            }
+            //thread 끝
+
+
+        }
         //binding.routeNumTextView.text = routeNum
         //binding.startAndEndStationTextView.text = intent.getStringExtra("startStationNm") + "<---> " +intent.getStringExtra("finishStationNm")
 
@@ -50,6 +108,7 @@ class DrivingActivity : AppCompatActivity() {
 
         dca = DrivingCustomAdapter(stationList,object : DrivingCustomAdapter.OnRouteClickedListener{
             override fun onRouteClicked(model: StationModel) {
+
                 //Toast.makeText(baseContext, "${model.routeId} , ",Toast.LENGTH_SHORT).show()
                 //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
                 //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
@@ -71,4 +130,8 @@ class DrivingActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
 }

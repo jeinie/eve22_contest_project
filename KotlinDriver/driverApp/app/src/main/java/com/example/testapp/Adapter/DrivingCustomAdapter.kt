@@ -19,6 +19,7 @@ class DrivingCustomAdapter (var listData : ArrayList<StationModel>, var onRouteC
         var stName: TextView = itemView.findViewById(R.id.stName)
         var stId: TextView = itemView.findViewById(R.id.stId)
         var ord: TextView = itemView.findViewById(R.id.ord)
+        var clientNum : TextView = itemView.findViewById(R.id.clientNum)
     }
 
     // ViewHolder 생성, ViewHolder는 View를 담는 상자
@@ -38,6 +39,14 @@ class DrivingCustomAdapter (var listData : ArrayList<StationModel>, var onRouteC
         holder.ord.text = (position + 1).toString()
         holder.stName.text = item.stationNm
         holder.stId.text = item.stationId
+
+        if ( item.waitingCnt.equals("") ) {
+            holder.clientNum.text = "0명 대기중..."
+        } else {
+            holder.clientNum.text = item.waitingCnt + "명 대기중..."
+        }
+
+
 
         //변화 : setonClickListener추가해준부분
         holder.itemView.setOnClickListener {
