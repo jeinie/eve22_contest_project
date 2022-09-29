@@ -58,6 +58,18 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
 
         val stationList : ArrayList<StationModel> = intent.getSerializableExtra("stationList") as ArrayList<StationModel>
 
+        //현재 위치해있는 정류장이 가운데로 가게해야함으로 앞뒤로 빈 index를 4개씩 할당해야함
+
+        var emptyStationModel = StationModel("","","","")
+
+        for( i in 0 until 4 ) {
+
+            stationList.add( 0 , emptyStationModel )
+            stationList.add( stationList.size , emptyStationModel )
+
+        }
+
+
         var routeNum : String? = intent.getStringExtra("routeNum")
         var vehId : String? = intent.getStringExtra("vehId")
         var routeId : String? = intent.getStringExtra("routeId")
@@ -89,7 +101,7 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
                 //recyclerViewState = binding.stationsrecyclerView.layoutManager!!.onSaveInstanceState()!!
                 // 스크롤
                 binding.stationsrecyclerView.scrollToPosition( msg.what )
-
+                //binding.stationsrecyclerView.
                 dca.notifyDataSetChanged()
             }
         }
@@ -137,13 +149,24 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
 
                         if ( stationList[ i ].stationId.equals(  bpForLoop  ) ) {
 
-                            busPos = i
+                            //현재위치가 어딘지 찾으면 나머지 전부 false로 현재위치 flag바꿔주고 현재위치만 true로
+                            for ( j in 0 until stationList.size ) {
+
+                                stationList[ j ].CurrentPosFlag = false
+
+                            }
+
+                            stationList[ i ].CurrentPosFlag = true
+
+                            busPos = i - 3
 
                             break
 
                         } else {
 
-                            busPos = 0
+                            stationList[ 4 ].CurrentPosFlag = true
+
+                            busPos = 4 - 3
 
                         }
 

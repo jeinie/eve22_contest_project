@@ -1,5 +1,6 @@
 package com.example.testapp.Adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ class DrivingCustomAdapter (var listData : ArrayList<StationModel>, var onRouteC
         var stId: TextView = itemView.findViewById(R.id.stId)
         var ord: TextView = itemView.findViewById(R.id.ord)
         var clientNum : TextView = itemView.findViewById(R.id.clientNum)
+        var container : View = itemView.findViewById(R.id.container)
     }
 
     // ViewHolder 생성, ViewHolder는 View를 담는 상자
@@ -40,8 +42,32 @@ class DrivingCustomAdapter (var listData : ArrayList<StationModel>, var onRouteC
         holder.stName.text = item.stationNm
         holder.stId.text = item.stationId
 
+        if ( item.CurrentPosFlag == true ) {
+
+            //현재위치면 하이라이트
+            holder.container.setBackgroundColor( Color.parseColor( "#000000" ) )
+            holder.stName.setTextColor(Color.parseColor("#ffffff"))
+            holder.ord.setTextColor(Color.parseColor("#ffffff"))
+            holder.stId.setTextColor(Color.parseColor("#ffffff"))
+
+        }
+
         if ( item.waitingCnt.equals("") ) {
-            holder.clientNum.text = "0명 대기중..."
+
+            if ( item.stationId.equals("") ){
+
+                holder.clientNum.text = ""
+
+            } else {
+
+                holder.clientNum.text = "0명 대기중..."
+
+            }
+
+
+
+
+
         } else {
             holder.clientNum.text = item.waitingCnt + "명 대기중..."
         }
