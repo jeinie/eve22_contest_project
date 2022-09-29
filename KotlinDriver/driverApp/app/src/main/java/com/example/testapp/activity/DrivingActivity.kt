@@ -1,10 +1,7 @@
 package com.example.testapp.activity
 
 import android.graphics.Color
-import android.os.Build
-import android.os.Bundle
-import android.os.PersistableBundle
-import android.os.StrictMode
+import android.os.*
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapp.Adapter.DrivingCustomAdapter
@@ -33,11 +30,15 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
     lateinit var binding : ActivityDrivingBinding
     lateinit var dc : DrivingController
     lateinit var dca : DrivingCustomAdapter
+    //recyclerview 갱신시 화면 올라감 방지
+    //lateinit var recyclerViewState : Parcelable
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
         job = Job()
+
+
 
         window.statusBarColor = Color.parseColor("#000000")
         binding = ActivityDrivingBinding.inflate(layoutInflater)
@@ -58,6 +59,39 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
         var routeNum : String? = intent.getStringExtra("routeNum")
         var vehId : String? = intent.getStringExtra("vehId")
         var routeId : String? = intent.getStringExtra("routeId")
+
+
+        //recycler view 핸들러
+        val handler = object : Handler(){
+            override fun handleMessage(msg: Message) {
+
+
+                dca = DrivingCustomAdapter(stationList,
+                    object : DrivingCustomAdapter.OnRouteClickedListener {
+                        override fun onRouteClicked(model: StationModel) {
+
+                            //Toast.makeText(baseContext, "${model.routeId} , ",Toast.LENGTH_SHORT).show()
+                            //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
+                            //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
+                            //sc.loadBus(model.routeId,applicationContext)
+                            //Log.d("item확인","item별 model.ord : ${model.ord}")
+                            //Log.d("item확인","item별 routeId : ${routeId}")
+                            Log.d("item확인", "item별 model.stationId : ${model.stationId}")
+                            Log.d("item확인", "item별 model.stationNm : ${model.stationNm}")
+                            //dc.getArriveBus(model.stationId,routeId!!,model.ord,routeNum!!,model.stationNm,applicationContext)
+
+                        }
+                    })
+                binding.stationsrecyclerView.adapter = dca
+                //recyclerview 갱신시 화면 올라감 방지
+                //recyclerViewState = binding.stationsrecyclerView.layoutManager!!.onSaveInstanceState()!!
+                binding.stationsrecyclerView.scrollToPosition(5)
+                dca.notifyDataSetChanged()
+            }
+        }
+        //recycler view 핸들러
+
+
 
         Log.d("DrivingActivity에서의 routeNum : ","${routeNum}")
         Log.d("DrivingActivity에서의 vehId : ","${vehId}")
@@ -92,7 +126,11 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
                         }
 
                     }
+
+                    handler.sendEmptyMessage(0)
+
                     Thread.sleep(5000L)
+
                 }
                 //while문 끝
             }
@@ -105,26 +143,27 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
 
 
         //ArrayList 받아왔으니 목록 list 그대로 띄워주는 작업을 해줘야지
+        /*
+        dca = DrivingCustomAdapter(stationList,
+            object : DrivingCustomAdapter.OnRouteClickedListener {
+                override fun onRouteClicked(model: StationModel) {
 
-        dca = DrivingCustomAdapter(stationList,object : DrivingCustomAdapter.OnRouteClickedListener{
-            override fun onRouteClicked(model: StationModel) {
+                    //Toast.makeText(baseContext, "${model.routeId} , ",Toast.LENGTH_SHORT).show()
+                    //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
+                    //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
+                    //sc.loadBus(model.routeId,applicationContext)
+                    //Log.d("item확인","item별 model.ord : ${model.ord}")
+                    //Log.d("item확인","item별 routeId : ${routeId}")
+                    Log.d("item확인", "item별 model.stationId : ${model.stationId}")
+                    Log.d("item확인", "item별 model.stationNm : ${model.stationNm}")
+                    //dc.getArriveBus(model.stationId,routeId!!,model.ord,routeNum!!,model.stationNm,applicationContext)
 
-                //Toast.makeText(baseContext, "${model.routeId} , ",Toast.LENGTH_SHORT).show()
-                //현재 toast는 model의 routeId 즉 4312가 뜨는 상태이다.
-                //고로 routeId를 넘겨서 버스가 지나는 station들을 뽑아와야 한다
-                //sc.loadBus(model.routeId,applicationContext)
-                //Log.d("item확인","item별 model.ord : ${model.ord}")
-                //Log.d("item확인","item별 routeId : ${routeId}")
-                Log.d("item확인","item별 model.stationId : ${model.stationId}")
-                Log.d("item확인","item별 model.stationNm : ${model.stationNm}")
-                //dc.getArriveBus(model.stationId,routeId!!,model.ord,routeNum!!,model.stationNm,applicationContext)
-
-            }
-        })
+                }
+            })
         binding.stationsrecyclerView.adapter = dca
         dca.notifyDataSetChanged()
+        */
 
-        //
 
 
 
@@ -133,5 +172,6 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
+
     }
 }
