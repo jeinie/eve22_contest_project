@@ -45,5 +45,9 @@ data class Item (
 
     //지도에 버스 좌표 찍는거 구현하려고 만드는 필드들
     val tmX : String,
-    val tmY : String
+    val tmY : String,
+    //여기부터 버스기사님의 운행위치를 알려주기위해 요청한 api / getBusPos interface파일과 관련있음
+    val stId : String,
+    val lastStnId : String
+
 )

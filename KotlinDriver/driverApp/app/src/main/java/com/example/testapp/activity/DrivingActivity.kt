@@ -36,6 +36,8 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var busPos : Int = 0
+        var bpForLoop : String
         job = Job()
 
 
@@ -85,7 +87,9 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
                 binding.stationsrecyclerView.adapter = dca
                 //recyclerview 갱신시 화면 올라감 방지
                 //recyclerViewState = binding.stationsrecyclerView.layoutManager!!.onSaveInstanceState()!!
-                binding.stationsrecyclerView.scrollToPosition(5)
+                // 스크롤
+                binding.stationsrecyclerView.scrollToPosition( msg.what )
+
                 dca.notifyDataSetChanged()
             }
         }
@@ -127,7 +131,26 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
 
                     }
 
-                    handler.sendEmptyMessage(0)
+                    bpForLoop = dc.getBusPos( vehId )
+                    //Log.d("API 제대로 호출되나","${dc.getBusPos( vehId )}")
+                    for( i in 0 until stationList.size ) {
+
+                        if ( stationList[ i ].stationId.equals(  bpForLoop  ) ) {
+
+                            busPos = i
+
+                            break
+
+                        } else {
+
+                            busPos = 0
+
+                        }
+
+                    }
+
+
+                    handler.sendEmptyMessage( busPos )
 
                     Thread.sleep(5000L)
 
