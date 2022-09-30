@@ -162,13 +162,14 @@ class DrivingActivity : AppCompatActivity() , CoroutineScope{
 
                             break
 
-                        } else {
+                        }
+                        /*else {
 
                             stationList[ 4 ].CurrentPosFlag = true
 
                             busPos = 4 - 3
 
-                        }
+                        }*/
 
                     }
 

@@ -40,10 +40,10 @@ class DrivingController{
         var call: Call<Bus> = service.getBusPos(vehId , "json")
         var body = call.execute().body()
         //var routeArrayList = ArrayList<RouteModel>()
-        //var lastStnId = body!!.msgBody.itemList[0].lastStnId
-        //Log.d("여기가 문제인가 ? ", "${lastStnId}")
+        var lastStnId = body!!.msgBody.itemList[0].lastStnId
+        Log.d("여기가 문제인가 1? ", "${lastStnId}")
         var stId = body!!.msgBody.itemList[0].stId
-        Log.d("여기가 문제인가 ? ", "${stId}")
+        Log.d("여기가 문제인가 2? ", "${stId}")
         //return arrayOf(lastStnId,stId)
         return stId
     }

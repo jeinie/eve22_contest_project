@@ -49,6 +49,15 @@ class DrivingCustomAdapter (var listData : ArrayList<StationModel>, var onRouteC
             holder.stName.setTextColor(Color.parseColor("#ffffff"))
             holder.ord.setTextColor(Color.parseColor("#ffffff"))
             holder.stId.setTextColor(Color.parseColor("#ffffff"))
+            holder.clientNum.setTextColor(Color.parseColor("#ffffff"))
+
+        } else {
+
+            holder.container.setBackgroundColor( Color.parseColor( "#ffffff" ) )
+            holder.stName.setTextColor(Color.parseColor("#000000"))
+            holder.ord.setTextColor(Color.parseColor("#000000"))
+            holder.stId.setTextColor(Color.parseColor("#000000"))
+            holder.clientNum.setTextColor(Color.parseColor("#000000"))
 
         }
 
