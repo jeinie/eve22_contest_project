@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "879219814888",
-    "project_id": "eveproject-be461",
-    "storage_bucket": "eveproject-be461.appspot.com"
+    "project_number": "871524826799",
+    "firebase_url": "https://eveproject-624f6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "eveproject-624f6",
+    "storage_bucket": "eveproject-624f6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:879219814888:android:61162dfca57ac6b45b745d",
+        "mobilesdk_app_id": "1:871524826799:android:066367e8dff79ac9b7de5a",
         "android_client_info": {
           "package_name": "com.example.testapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "879219814888-bfts2q0bm2off31ggacvddna9msju4nk.apps.googleusercontent.com",
+          "client_id": "871524826799-4furp0mo87ahgb841nvelv42v8fcv0bl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDoX-nPCPEPcF8NezJigYeMqKYIZqQsj2Y"
+          "current_key": "AIzaSyAcDYaA5S-05w0x_bMaAaFa-a6KLzFseMk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "879219814888-bfts2q0bm2off31ggacvddna9msju4nk.apps.googleusercontent.com",
+              "client_id": "871524826799-4furp0mo87ahgb841nvelv42v8fcv0bl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
