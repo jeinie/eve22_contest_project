@@ -22,7 +22,7 @@ router.get("/getReservation", (req, res) => {
   res.json(data);
 });
 
-// 예약 취소 버튼 (맞는지 확인)
+// 예약 취소 버튼
 router.get("/cancelReservation", (req, res) => {
   console.log("passenger/cancel 요청 들어옴");
   console.log("버스아이디: " + req.query.vehId);

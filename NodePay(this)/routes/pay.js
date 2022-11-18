@@ -10,6 +10,7 @@ const router = express.Router();
 var axios = require("axios").default;
 
 router.get("/pay", (req, res) => {
+
   /*var axios = require("axios").default;
   var options = {
     method: 'POST',
@@ -64,7 +65,7 @@ router.get("/pay", (req, res) => {
       amount: req.query.amount,
       // orderId를 한 번 사용하면 다시 재사용이 안됨... 새로 만들어서 해야 하는 것 같음
       // 이건 그냥 사용자 아이디로 앱에서 보내주는 게 나을 듯
-      orderId: 'gXqf9N8mDmd6ozEoA4YTI3',
+      orderId: 'gXqf9N8mDmd6ozEoA4YTI13',
       orderName: req.query.passengerId,
       cardNumber: req.query.cardNumber,
       cardExpirationYear: req.query.cardExpirationYear,
@@ -76,11 +77,11 @@ router.get("/pay", (req, res) => {
 
   axios.request(options).then(function (response) {
     console.log(response.data);
+    res.json(response.data.card);
   }).catch(function (error) {
     console.error(error);
   });
 
-  res.json(result);
 })
 
 module.exports = router;
