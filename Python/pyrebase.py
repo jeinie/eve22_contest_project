@@ -11,3 +11,4 @@ default_app = firebase_admin.initialize_app(cred, {
 
 ref = db.reference() # 기본 위치 지
 ref.update({'자동차':['기아','현대']})
+print(ref.get())
