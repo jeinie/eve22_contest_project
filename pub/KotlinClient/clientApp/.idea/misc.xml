@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.187" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/drawable/index_register_btn.xml" value="0.187" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_bus_list_at_station.xml" value="0.25" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_bus_list_at_station_bus_list.xml" value="0.25" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_index.xml" value="0.3359375" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_main.xml" value="0.3359375" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_main_routeid_list.xml" value="0.3359375" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_reservation_after.xml" value="0.3359375" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_stations.xml" value="0.25" />
+        <entry key="..\:/workspace/newFolder3/eve22_contest_project/KotlinClient/clientApp/app/src/main/res/layout/activity_stations_station_list.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2604166666666667" />
+        <entry key="app/src/main/res/drawable/bg_border_view.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22708333333333333" />
+        <entry key="app/src/main/res/drawable/index_id_pw_btn.xml" value="0.228125" />
+        <entry key="app/src/main/res/drawable/index_login_btn.xml" value="0.1675925925925926" />
+        <entry key="app/src/main/res/drawable/index_register_btn.xml" value="0.1675925925925926" />
+        <entry key="app/src/main/res/drawable/main_textview.xml" value="0.2722222222222222" />
+        <entry key="app/src/main/res/font/baloo_tamma.xml" value="0.18888888888888888" />
+        <entry key="app/src/main/res/font/font.xml" value="0.2574074074074074" />
+        <entry key="app/src/main/res/layout/activity_bus_list_at_station.xml" value="0.21910112359550563" />
+        <entry key="app/src/main/res/layout/activity_bus_list_at_station_bus_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_index.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main_routeid_list.xml" value="0.17" />
+        <entry key="app/src/main/res/layout/activity_regist.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_reservation_after.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_stations.xml" value="0.16394927536231885" />
+        <entry key="app/src/main/res/layout/activity_stations_station_list.xml" value="0.16394927536231885" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
