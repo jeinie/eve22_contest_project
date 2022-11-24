@@ -60,7 +60,19 @@ private var mThread: Thread? = object : Thread("My Thread") {
     override fun run() {
         super.run()
 
-        for (i in 0 until ( (alarmMsg.toInt() - 3) * 60 ) ) {
+        var number : Int = 0
+
+        if ( (alarmMsg.toInt() - 3) > 3 ) {
+
+            number = alarmMsg.toInt() - 3
+
+        } else {
+
+            number = 3
+
+        }
+
+        for (i in 0 until ( number * 60 ) ) {
             Log.d("스레드진행중", "count : ${i}")
 
             try {
