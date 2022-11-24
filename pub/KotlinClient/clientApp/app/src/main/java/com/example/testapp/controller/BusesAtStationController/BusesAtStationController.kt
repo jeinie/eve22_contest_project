@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class BusesAtStationController {
-    fun getBusPosition( vehId : String , stName : String , routeNum : String , applicontext : Context ){
+    fun getBusPosition( arrmsg : String , vehId : String , stName : String , routeNum : String , applicontext : Context ){
         val retrofit = Retrofit.Builder().baseUrl(ApiKeyThree.DOMAIN).addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(getBusPos::class.java)
         Log.d("대체 무슨일 ","vehId : ${vehId}")
@@ -32,6 +32,11 @@ class BusesAtStationController {
                         var intent = Intent(applicontext, ReservationAfterActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
+                        /*
+                        * 남은 시간을 넘겨서 몇분남았는지를 체크하고 , 2분남았을때 진동이 울리게 예약해도 될듯
+                        * */
+
+                        intent.putExtra("arrmsg",arrmsg);
                         intent.putExtra("vehId",vehId)
                         intent.putExtra("stName",stName)
                         intent.putExtra("routeNum",routeNum)

@@ -13,6 +13,7 @@ import com.example.testapp.Model.BusModel.Bus
 import com.example.testapp.Model.BusModel.ExistedStationModel
 import com.example.testapp.Model.KeyModel.ApiKeyOne
 import com.example.testapp.Model.RouteModel.RouteModel
+import com.example.testapp.R
 import com.example.testapp.Service.getBus
 import com.example.testapp.controller.mainController.MainController
 import com.example.testapp.databinding.ActivityMainBinding
@@ -41,6 +42,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     lateinit var mca : MainCustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.TestApp)
+
+
         super.onCreate(savedInstanceState)
         job = Job()
 

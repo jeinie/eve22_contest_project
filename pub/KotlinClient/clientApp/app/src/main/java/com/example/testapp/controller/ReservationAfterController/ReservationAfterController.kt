@@ -18,6 +18,8 @@ class ReservationAfterController {
         var call : Call<Bus> = service.getBusPos(vehId,"json")
         var body = call.execute().body()
         Log.d("카페라떼마싯넹 확인","tmx : ${body!!.msgBody.itemList[0].tmX} , tmy : ${body!!.msgBody.itemList[0].tmY}")
+        Log.d("뭐뭐왔었더라", "뭐뭐왔었더라 : ${body!!.msgBody.itemList[0]}")
+
         var busCoordinateModel = BusCoordinateModel(body!!.msgBody.itemList[0].tmX.toDouble(),body!!.msgBody.itemList[0].tmY.toDouble())
         return busCoordinateModel
     }

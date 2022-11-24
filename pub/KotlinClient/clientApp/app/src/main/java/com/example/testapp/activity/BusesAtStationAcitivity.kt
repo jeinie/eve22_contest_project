@@ -26,6 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
@@ -58,7 +59,7 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
         }
 
         val DialogBuilder = AlertDialog.Builder(this)
-
+        val DialogBuilder2 = AlertDialog.Builder(this)
 
         val stId = intent.getStringExtra("stId")
         val routeId = intent.getStringExtra("routeId")
@@ -96,19 +97,18 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
                 //model.vehId
                 DialogBuilder
                     .setTitle("${stationNm} ( ${model.routeNum} )")
-                    .setMessage("${model.arrmsg}")
+                    .setMessage("${model.arrmsg}\n3정거장이 남았을때 알림을 해드려요!")
                 //메세지만 띄워준상태고
                 var DialogBuilderListener = object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         when (p1) {
                             DialogInterface.BUTTON_POSITIVE ->
                             {
+                                /*
                                 //문제생길듯..
                                 val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:3000")
                                     .addConverterFactory(GsonConverterFactory.create()).build()
                                 val service = retrofit.create(getReservation::class.java)
-
-
                                 service.getBusReservation(model.vehId, stationNm!!).enqueue(object :
                                     Callback<RegisterInfo> {
                                     override fun onResponse(call: Call<RegisterInfo>, response: Response<RegisterInfo>) {
@@ -120,18 +120,74 @@ class BusesAtStationAcitivity : AppCompatActivity() , CoroutineScope {
                                             //Log.d("클릭한 버스의 아이디 : ","${model.vehId}")
                                             Log.d("정보가 제대로 안넘어오나? : ",model.vehId+" : "+stationNm!!+" : "+model.routeNum)
                                             basc.getBusPosition(model.vehId,stationNm!!,model.routeNum,applicationContext)
-
                                         }
                                     }
-
                                     override fun onFailure(call: Call<RegisterInfo>, t: Throwable) {
                                         Log.d("버튼 눌림 4", "버튼 눌렸습니다 4")
                                         Log.d("res", "onResponse 실패")
-
                                     }
                                 })
+                                 */
                                 //문제생길듯..
+                                /* 얘는원래 122번째줄인데 버스 기사서버가 없어지고 버스서버도 없어질테니 .. 밖으로 빼둔것 */
+                                /* model.arrmsg를 추가해서 넘겨주었다 */
+                                try{
+                                    Log.d("대체뭐라뜨냐 ",model.arrmsg.split("[")[1][0].toString() )
+                                    if ( model.arrmsg.split("[")[1][0].toString().toInt() < 3 ) {
+                                        //alert
+                                        DialogBuilder2
+                                            .setTitle("다시 예약해주세요!")
+                                            .setMessage("최소 3정거장 전의 버스를 예약해주세요!")
+                                        //메세지만 띄워준상태고
+                                        var DialogBuilderListener2 = object : DialogInterface.OnClickListener {
+                                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                                                when (p1) {
+                                                    DialogInterface.BUTTON_NEGATIVE ->{
+                                                        Log.d("확인","확인")
+                                                    }
+                                                }
+                                            }
+                                        }
 
+
+
+                                        DialogBuilder2.setNegativeButton("확인",DialogBuilderListener2)
+                                        DialogBuilder2.show()
+                                        return
+                                        //여기까지 다이얼로그}
+                                        //alert
+                                    }
+
+                                } catch ( e : Exception ){
+
+                                    //alert
+                                    DialogBuilder2
+                                        .setTitle("다시 예약해주세요!")
+                                        .setMessage("최소 3정거장 전의 버스를 예약해주세요!")
+                                    //메세지만 띄워준상태고
+                                    var DialogBuilderListener2 = object : DialogInterface.OnClickListener {
+                                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                                            when (p1) {
+
+                                                DialogInterface.BUTTON_NEGATIVE -> {
+                                                    Log.d("확인", "확인")
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                    DialogBuilder2.setNegativeButton("확인",DialogBuilderListener2)
+                                    DialogBuilder2.show()
+                                    return
+                                    //여기까지 다이얼로그}
+                                    //alert
+
+                                }
+
+
+
+
+                                basc.getBusPosition( model.arrmsg ,model.vehId,stationNm!!,model.routeNum,applicationContext)
 
                             }
                             DialogInterface.BUTTON_NEGATIVE ->

@@ -49,13 +49,10 @@ class StationsActivity : AppCompatActivity(){
                 Log.d("item확인","item별 model.stationId : ${model.stationId}")
                 Log.d("item확인","item별 model.stationNm : ${model.stationNm}")
                 sc.getArriveBus(model.stationId,routeId!!,model.ord,routeNum!!,model.stationNm,applicationContext)
-
             }
         })
         binding.stationsrecyclerView.adapter = sca
         sca.notifyDataSetChanged()
         //recyclerv
-
-
     }
 }

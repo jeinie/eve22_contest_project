@@ -2,19 +2,23 @@ package com.example.testapp.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
-import android.os.Build
-import android.os.Bundle
-import android.os.Looper
-import android.os.StrictMode
+import android.os.*
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.buspassenger.Model.RegisterInfo
 import com.example.buspassenger.Service.getReservation
 import com.example.testapp.Model.BusCoordinateModel.BusCoordinateModel
@@ -34,9 +38,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
+import kotlin.reflect.typeOf
 
-class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , CoroutineScope {
+@RequiresApi(Build.VERSION_CODES.S)
+class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , CoroutineScope  {
 
     //코루틴
     private lateinit var job : Job
@@ -57,6 +64,13 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
     private lateinit var stName : String
     private lateinit var routeNum : String
     private lateinit var busCoordinate : BusCoordinateModel
+    private lateinit var arrmsg : String
+    var alarmMsg : Long = 0
+
+    /**
+     * 바이브레이터 떄문에 추가한 코드
+     */
+
 
     private lateinit var discriptor : BitmapDescriptor
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +91,23 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
         vehId = intent.getStringExtra("vehId")!!
         stName = intent.getStringExtra("stName")!!
         routeNum = intent.getStringExtra("routeNum")!!
+        arrmsg = intent.getStringExtra("arrmsg")!!
+        alarmMsg = arrmsg.split("[")[1][0].toString().toLong()
+
+
+        //백그라운드에서 돌릴 service에 인텐트까지 넘기는 코드
+        val serviceIntent = Intent(this@ReservationAfterActivity,ArriveAlarmService::class.java)
+        serviceIntent.putExtra("alarmMsg", alarmMsg)
+
+        Log.d("뭘 넘기기는하는건가?",alarmMsg.toString())
+        Log.d("뭘 넘기기는하는건가? 타입은? ", alarmMsg.javaClass.name)
+
+        serviceIntent.putExtra("stName",stName)
+        serviceIntent.putExtra("routeNum",routeNum)
+        startService(serviceIntent)
+
+        //백그라운드에서 돌릴 service에 인텐트까지 넘기는 코드
+
 
         binding.stNameTextView.text = stName
         binding.routeNumTextView.text = routeNum
@@ -86,7 +117,11 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
             StrictMode.setThreadPolicy(policy)
         }
 
+
+
     }
+
+
 
     fun startProcess() {
         // SupportMapFragment를 가져와서 지도가 준비되면 알림을 받습니다.
@@ -180,8 +215,9 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
                         Log.d("엥??","tmx : ${tmx.toDouble()} , tmy : ${tmy.toDouble()}")
                         setLastLocation(location)
                         delay(5000L)
+
                     }
-                //}
+                    //}
                 }
 
             }
@@ -194,14 +230,12 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
     fun setLastLocation(lastLocation: Location) {
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
 
-
-
         var markerOptions = MarkerOptions()
             .position(LATLNG)
             .title("Marker in Seoul City Hall")
             .icon(discriptor)
 
-        //mMap.addMarker(markerOptions)
+        mMap.addMarker(markerOptions)
 
         val cameraPosition = CameraPosition.Builder()
             .target(LATLNG)
@@ -219,11 +253,10 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
 
     override fun onBackPressed() {
         //문제생길듯..
+        /* 버스 서버 , 버스 기사 서버 관리가 더는 필요없어졌으니.. 주석처리함이 맞다 job.cancel()과 finish()는 밖으로 빼준다
         val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:3000")
             .addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(cancelReservation::class.java)
-
-
 
         service.cancelBusReservation(vehId, stName).enqueue(object :
             Callback<RegisterInfo> {
@@ -242,7 +275,11 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
                 Log.d("res", "onResponse 실패")
             }
         })
+        */
         //문제생길듯..
+        job.cancel()
+        Toast.makeText(baseContext ,"예약이 취소되었습니다",Toast.LENGTH_SHORT).show()
+        finish()
 
     }
 

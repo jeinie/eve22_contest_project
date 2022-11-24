@@ -37,6 +37,8 @@ class StationsController {
                         intent.putExtra("routeNum",routeNum)
                         intent.putExtra("stationNm",stationNm)
                         intent.putExtra("ArriveBusesInfoList",arriveBusList)
+
+
                         applicontext.startActivity(intent)
                     }
                 }
