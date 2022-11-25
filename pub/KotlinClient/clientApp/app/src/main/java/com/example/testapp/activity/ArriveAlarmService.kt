@@ -60,19 +60,7 @@ private var mThread: Thread? = object : Thread("My Thread") {
     override fun run() {
         super.run()
 
-        var number : Int = 0
-
-        if ( (alarmMsg.toInt() - 3) > 3 ) {
-
-            number = alarmMsg.toInt() - 3
-
-        } else {
-
-            number = 3
-
-        }
-
-        for (i in 0 until ( number * 60 ) ) {
+        for (i in 0 until ( (alarmMsg.toInt() - 2) * 60 ) ) {
             Log.d("스레드진행중", "count : ${i}")
 
             try {
@@ -92,10 +80,10 @@ private var mThread: Thread? = object : Thread("My Thread") {
         builder2.setContentText("버스가 곧 도착합니다!!")
         builder2.color = Color.RED
 
-        //val notificationIntent = Intent(this, MainActivity::class.java)
-        //notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        //val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
-        //builder.setContentIntent(pendingIntent) // 알림 클릭 시 이동
+        val notificationIntent = Intent(applicationContext, MainActivity::class.java)
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
+        builder.setContentIntent(pendingIntent) // 알림 클릭 시 이동
 
         // 알림 표시
 

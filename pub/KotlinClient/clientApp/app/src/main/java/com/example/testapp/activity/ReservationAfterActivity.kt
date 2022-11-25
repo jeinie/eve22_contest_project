@@ -92,7 +92,9 @@ class ReservationAfterActivity : AppCompatActivity() , OnMapReadyCallback , Coro
         stName = intent.getStringExtra("stName")!!
         routeNum = intent.getStringExtra("routeNum")!!
         arrmsg = intent.getStringExtra("arrmsg")!!
-        alarmMsg = arrmsg.split("[")[1][0].toString().toLong()
+        alarmMsg = arrmsg.split("[")[1].split("번")[0].toString().toLong()
+        Log.d("뜨나요옹",alarmMsg.toString())
+        Log.d("뜨나요옹",alarmMsg.toString())
 
 
         //백그라운드에서 돌릴 service에 인텐트까지 넘기는 코드
